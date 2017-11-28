@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Vvissen</string>
+    <string name="title_activity_my_trips">MyTripsActivity</string>
+    <string name="action_settings">Settings</string>
+</resources>
