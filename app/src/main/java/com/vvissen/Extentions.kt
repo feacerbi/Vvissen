@@ -69,6 +69,8 @@ fun String.toFormatedDate(): String {
     return "Just now"
 }
 
+fun Long.toPeriodDate(): String = DateFormat.format("MMM dd", this).toString()
+
 fun String.toFormatedWebsite(): String {
     if(this.contains("www") || !this.contains("//")) return this
 
@@ -87,6 +89,13 @@ fun Long.toDistanceUnits(): String {
     }
 
     return "$precision %s".format(value, unit)
+}
+
+fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
+
+fun Calendar.rollDays(amount: Int): Calendar {
+    set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH) + amount)
+    return this
 }
 
 fun AlertDialog.Builder.showOneChoiceCancelableDialog(

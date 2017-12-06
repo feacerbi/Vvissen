@@ -1,8 +1,8 @@
 package com.vvissen
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 
 class SplashscreenActivity : AppCompatActivity() {
 
@@ -11,7 +11,7 @@ class SplashscreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splashscreen)
 
         Handler().postDelayed({
-            launchActivity(MyTripsActivity::class)
+            launchActivity(MainActivity::class)
             finish()
         }, 2000)
     }

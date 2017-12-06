@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="countries">
+        <item>Brazil</item>
+        <item>Mexico</item>
+    </string-array>
+
+    <string-array name="brazil_cities">
+        <item>Maresias - SP</item>
+        <item>Rio de Janeiro - RJ</item>
+        <item>Ilha Bela - SP</item>
+        <item>Riviera de São Lourenço - SP</item>
+        <item>Búzios - RJ</item>
+        <item>Arraial do Cabo - RJ</item>
+        <item>Trancoso - BA</item>
+        <item>Florianópolis - SC</item>
+    </string-array>
+
+    <string-array name="mexico_cities">
+        <item>Cancún - QR</item>
+    </string-array>
+
+    <string-array name="packages">
+        <item>VIP \tU$1,500 &#8211; U$3,000</item>
+        <item>Luxury \tU$3,100 &#8211; U$5,000</item>
+        <item>Premium \tU$5,100 &#8211; U$10,000</item>
+    </string-array>
+</resources>
