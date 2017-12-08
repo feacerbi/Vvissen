@@ -8,6 +8,7 @@ data class House(
         var description: String = "",
         var address: String = "",
         var place: String = "",
+        var rating: Float = 5F,
         var photos: Array<String> = arrayOf("error"),
         var packageTier: Package = PremiumPackage()) {
 
@@ -45,31 +46,30 @@ data class House(
         place = "Cancún"
         photos = arrayOf("error")
         packageTier = PremiumPackage()
-
+        rating = 4.5F
         return this
     }
 
     fun createFakeHouse2(): House {
-        name = "Hill Sight Pool"
+        name = "Hill Sight Infinite Pool"
         price = 4600.0
         description = "Nice house."
         address = "Some street in Rio"
         place = "Rio de Janeiro"
         photos = arrayOf("error")
         packageTier = LuxuryPackage()
-
         return this
     }
 
     fun createFakeHouse3(): House {
-        name = "Cozy Non Stop Party"
+        name = "Cozy Non-Stop Party"
         price = 1900.0
         description = "Nice house."
         address = "Some street in Maresias"
         place = "Maresias"
         photos = arrayOf("error")
         packageTier = VipPackage()
-
+        rating = 4F
         return this
     }
 }

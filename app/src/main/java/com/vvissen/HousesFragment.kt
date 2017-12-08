@@ -37,7 +37,7 @@ class HousesFragment : Fragment(), DrawerListener {
                 toolbar_houses.setNavigationOnClickListener { mListener?.setPage(0) }
                 toolbar_houses.inflateMenu(R.menu.menu_houses)
 
-                toolbar_houses.setOnMenuItemClickListener( { item ->
+                toolbar_houses.setOnMenuItemClickListener( { _ ->
                     if(mListener is DrawerController) {
                         val drawerController = mListener
                         (drawerController as DrawerController).toggleDrawer()

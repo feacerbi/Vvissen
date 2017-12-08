@@ -1,4 +1,4 @@
 package com.vvissen.model
 
-class GroupFriends10 : GroupType("Friends", 10){
+class GroupFriends10 : GroupType("friends", 10){
 }

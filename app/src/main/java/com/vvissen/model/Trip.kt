@@ -5,51 +5,45 @@ import java.util.*
 
 data class Trip(
         var house: House = House(),
-        var guests: Array<User> = arrayOf(User()),
-        var groupType: GroupType = GroupUnknown(),
+        var guests: MutableMap<User, Boolean> = mutableMapOf(User("1") to true, User("2") to true),
+        var groupType: GroupType = GroupRandom(),
+        var confirmed: Boolean = false,
         var period: Pair<Long, Long> = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().timeInMillis)
 ) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Trip
-
-        if (house != other.house) return false
-        if (!Arrays.equals(guests, other.guests)) return false
-        if (period != other.period) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = house.hashCode()
-        result = 31 * result + Arrays.hashCode(guests)
-        result = 31 * result + period.hashCode()
-        return result
-    }
 
     fun createFakeTrip(): Trip {
         house = House().createFakeHouse()
-        guests = arrayOf(User())
-        groupType = GroupUnknown()
+        groupType = GroupRandom()
         period = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().rollDays(10).timeInMillis)
+        confirmedGuests()
         return this
     }
 
     fun createFakeTrip2(): Trip {
         house = House().createFakeHouse2()
-        guests = arrayOf(User())
+        guests = mutableMapOf(Pair(User("1"), false), Pair(User("2"), true), Pair(User("3"), true), Pair(User("4"), false), Pair(User("5"), true), Pair(User("6"), true), Pair(User("7"), false), Pair(User("8"), true), Pair(User("9"), true), Pair(User("10"), true))
         groupType = GroupFriends55()
         period = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().rollDays(30).timeInMillis)
+        confirmed = true
         return this
     }
 
     fun createFakeTrip3(): Trip {
         house = House().createFakeHouse3()
-        guests = arrayOf(User())
+        guests = mutableMapOf(Pair(User("1"), true), Pair(User("2"), true), Pair(User("3"), true), Pair(User("4"), true), Pair(User("5"), true), Pair(User("6"), true), Pair(User("7"), true), Pair(User("8"), true), Pair(User("9"), true), Pair(User("10"), true))
         groupType = GroupFriends10()
         period = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().rollDays(18).timeInMillis)
+        confirmed = true
         return this
+    }
+
+    fun confirmedGuests(): Int {
+        var confirmedNumber = 0
+
+        for((_, confirmed) in guests) {
+            if(confirmed) confirmedNumber++
+        }
+
+        return confirmedNumber
     }
 }

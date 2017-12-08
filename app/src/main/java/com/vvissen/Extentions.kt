@@ -77,6 +77,8 @@ fun String.toFormatedWebsite(): String {
     return this.replace("//", "//www.", true)
 }
 
+fun String.noDecimals() = this.substring(0, this.lastIndexOf('.'))
+
 fun Long.toDistanceUnits(): String {
     var unit = "m"
     var value = this.toFloat()

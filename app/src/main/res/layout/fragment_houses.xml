@@ -14,9 +14,16 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimaryDark"
             android:elevation="4dp"
-            app:title="@string/title_activity_houses"
+            app:title=""
             app:navigationIcon="@drawable/ic_person_black_24dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:src="@drawable/brand_new"/>
+
+        </android.support.v7.widget.Toolbar>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_houses_list"
@@ -25,9 +32,6 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar_houses"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="LinearLayoutManager"
-            android:layout_marginTop="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
             tools:listitem="@layout/house_card_item">
         </android.support.v7.widget.RecyclerView>
 
