@@ -16,9 +16,6 @@
                     android:id="@+id/nav_city"
                     app:actionLayout="@layout/drawer_spinner"
                     android:title="" />
-                <item
-                    android:id="@+id/nav_space"
-                    android:title="" />
             </menu>
         </item>
     </group>

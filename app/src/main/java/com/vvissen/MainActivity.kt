@@ -79,8 +79,9 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
                 var newCitiesAdapter: ArrayAdapter<String>? = null
 
                 when(position) {
-                    0 -> newCitiesAdapter = ArrayAdapter(this@MainActivity, R.layout.spinner_item, resources.getStringArray(R.array.brazil_cities))
-                    1 -> newCitiesAdapter = ArrayAdapter(this@MainActivity, R.layout.spinner_item, resources.getStringArray(R.array.mexico_cities))
+                    0 -> newCitiesAdapter = ArrayAdapter(this@MainActivity, R.layout.spinner_item, resources.getStringArray(R.array.all_cities))
+                    1 -> newCitiesAdapter = ArrayAdapter(this@MainActivity, R.layout.spinner_item, resources.getStringArray(R.array.brazil_cities))
+                    2 -> newCitiesAdapter = ArrayAdapter(this@MainActivity, R.layout.spinner_item, resources.getStringArray(R.array.mexico_cities))
                 }
 
                 newCitiesAdapter?.setDropDownViewResource(R.layout.spinner_dropdown_item)
@@ -157,6 +158,8 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
     override fun onBackPressed() {
         if (container.currentItem == 1 && drawer_layout.isDrawerOpen(GravityCompat.END)) {
             drawer_layout.closeDrawer(GravityCompat.END)
+        } else if(container.currentItem == 0) {
+            setPage(1)
         } else {
             super.onBackPressed()
         }

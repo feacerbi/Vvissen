@@ -7,7 +7,9 @@ import com.squareup.picasso.Picasso
 import com.vvissen.model.House
 import com.vvissen.model.LuxuryPackage
 import com.vvissen.model.PremiumPackage
-import kotlinx.android.synthetic.main.trip_card_item.view.*
+import kotlinx.android.synthetic.main.house_card_item.view.*
+import java.text.NumberFormat
+import java.util.*
 
 class HousesAdapter(private val houses: ArrayList<House> = arrayListOf())
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -19,7 +21,9 @@ class HousesAdapter(private val houses: ArrayList<House> = arrayListOf())
             tv_place_name.text = house.place
             tv_package_tier.text = house.packageTier.name
             tv_house_title.text = house.name
-            tv_house_price.text = String.format("U$ ${house.price.format(2)}")
+            tv_house_price.text = String.format("U${NumberFormat.getCurrencyInstance(Locale.getDefault()).format(house.price).noDecimals()} per weekend")
+            tv_house_rating_grade.text = house.rating.toString()
+            tv_house_rating.rating = house.rating
 
             val photo = if(house.packageTier is PremiumPackage) R.drawable.cancun else if(house.packageTier is LuxuryPackage) R.drawable.rio else R.drawable.maresias
 

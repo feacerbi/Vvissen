@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="340dp"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="3dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardElevation="8dp">
@@ -14,32 +14,123 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/iv_place_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/cancun"/>
+
+        <TextView
+            android:id="@+id/tv_dates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/iv_place_photo"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:layout_marginStart="16dp"
+            android:textSize="14sp"
+            android:textAllCaps="true"
+            tools:text="july 05 - july 14"/>
+
+        <TextView
+            android:id="@+id/tv_confirmed_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintBaseline_toBaselineOf="@id/tv_dates"
+            android:layout_marginEnd="16dp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-smallcaps"
+            tools:text="8/10 confirmed" />
+
+        <TextView
+            android:id="@+id/tv_house_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintStart_toStartOf="@id/tv_dates"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_dates"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-sma"
+            tools:text="The Great Tent House"/>
+
+        <TextView
+            android:id="@+id/tv_house_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintStart_toStartOf="@id/tv_dates"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_house_title"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-smallcaps"
+            tools:text="random trip"/>
+
+        <TextView
+            android:id="@+id/tv_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintStart_toEndOf="@id/tv_house_people"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_house_title"
+            android:layout_marginStart="8dp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="•"/>
+
+        <TextView
+            android:id="@+id/tv_house_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintStart_toEndOf="@id/tv_separator"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_house_title"
+            android:layout_marginStart="8dp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="U$2,500"/>
+
+        <TextView
+            android:id="@+id/scrim"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_width="0dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintBottom_toBottomOf="@id/iv_place_photo"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/shape_scrim"/>
+
+        <TextView
+            android:id="@+id/tv_place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintBottom_toBottomOf="@id/iv_place_photo"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            tools:text="Cancún"/>
+
+        <TextView
+            android:id="@+id/tv_package_tier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintBottom_toBottomOf="@id/tv_place_name"
+            card_view:layout_constraintStart_toEndOf="@id/tv_place_name"
+            android:textColor="@color/colorAccent"
+            android:textSize="28sp"
+            tools:text="Premium"/>
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/cl_actions_bar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:paddingBottom="8dp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:visibility="invisible"
-                android:text="Details"/>
+            card_view:layout_constraintTop_toBottomOf="@id/tv_house_people"
+            card_view:layout_constraintStart_toStartOf="parent">
 
             <ImageView
                 android:id="@+id/iv_action_share"
@@ -78,113 +169,6 @@
                 android:src="@drawable/ic_date_range_black_24dp"/>
 
         </android.support.constraint.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/tv_house_price_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintBottom_toTopOf="@id/cl_actions_bar"
-            android:layout_marginStart="16dp"
-            android:alpha="0.6"
-            android:src="@drawable/ic_monetization_on_black_24dp"/>
-
-        <ImageView
-            android:id="@+id/iv_people_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintStart_toStartOf="@id/tv_house_price_icon"
-            card_view:layout_constraintBottom_toTopOf="@id/tv_house_price_icon"
-            android:alpha="0.6"
-            android:src="@drawable/ic_group_black_24dp"/>
-
-        <TextView
-            android:id="@+id/tv_house_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintBottom_toTopOf="@id/iv_people_number"
-            android:layout_marginStart="16dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="The Great Tent House"/>
-
-        <TextView
-            android:id="@+id/tv_dates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintBottom_toTopOf="@id/tv_house_title"
-            android:layout_marginStart="16dp"
-            android:textSize="14sp"
-            android:alpha="1"
-            tools:text="July 05 - July 14"/>
-
-        <TextView
-            android:id="@+id/tv_house_people"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            card_view:layout_constraintStart_toEndOf="@id/iv_people_number"
-            card_view:layout_constraintTop_toTopOf="@id/iv_people_number"
-            card_view:layout_constraintBottom_toBottomOf="@id/iv_people_number"
-            android:gravity="center"
-            android:layout_marginStart="8dp"
-            android:textSize="14sp"
-            android:alpha="0.7"
-            tools:text="10 Unknown"/>
-
-        <TextView
-            android:id="@+id/tv_house_price"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            card_view:layout_constraintStart_toStartOf="@id/tv_house_people"
-            card_view:layout_constraintTop_toTopOf="@id/tv_house_price_icon"
-            card_view:layout_constraintBottom_toBottomOf="@id/tv_house_price_icon"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:alpha="0.7"
-            tools:text="U$2,500,00"/>
-
-        <ImageView
-            android:id="@+id/iv_place_photo"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintBottom_toTopOf="@id/tv_dates"
-            android:layout_marginBottom="8dp"
-            tools:src="@drawable/cancun"/>
-
-        <TextView
-            android:id="@+id/scrim"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_width="0dp"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintBottom_toBottomOf="@id/iv_place_photo"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/shape_scrim"/>
-
-        <TextView
-            android:id="@+id/tv_place_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintBottom_toBottomOf="@id/iv_place_photo"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            tools:text="Cancún"/>
-
-        <TextView
-            android:id="@+id/tv_package_tier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintBottom_toBottomOf="@id/tv_place_name"
-            card_view:layout_constraintStart_toEndOf="@id/tv_place_name"
-            android:textColor="@color/colorAccent"
-            android:textSize="28sp"
-            tools:text="Premium"/>
 
     </android.support.constraint.ConstraintLayout>
 
