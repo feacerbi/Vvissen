@@ -1,4 +1,4 @@
-package com.vvissen
+package com.vvissen.activities
 
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
@@ -12,9 +12,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.Spinner
+import com.vvissen.*
+import com.vvissen.adapters.MainPagerAdapter
+import com.vvissen.fragments.HousePhotoFragment
+import com.vvissen.model.House
+import com.vvissen.model.LuxuryPackage
+import com.vvissen.model.PremiumPackage
+import com.vvissen.model.VipPackage
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), PagerController, DrawerController, ViewPager.OnPageChangeListener {
+class MainActivity : AppCompatActivity(), PagerController, DrawerController, ViewPager.OnPageChangeListener, HouseListClickListener {
 
     /**
      * The [android.support.v4.view.PagerAdapter] that will provide
@@ -34,16 +41,16 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
         // primary sections of the activity.
         mSectionsPagerAdapter = MainPagerAdapter(supportFragmentManager)
 
+        setUpFilters()
+
         // Set up the ViewPager with the sections adapter.
         container.adapter = mSectionsPagerAdapter
         container.addOnPageChangeListener(this)
 
-        setUpNavigationDrawer()
-
         setPage(1)
     }
 
-    private fun setUpNavigationDrawer() {
+    private fun setUpFilters() {
         val toggle = ActionBarDrawerToggle(this, drawer_layout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         toggle.syncState()
 
@@ -86,26 +93,69 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
 
                 newCitiesAdapter?.setDropDownViewResource(R.layout.spinner_dropdown_item)
                 citiesSpinner.adapter = newCitiesAdapter
+
+                onFilterSelected(DrawerItem.COUNTRIES, position)
             }
         }
 
         val premiumBox = nav_view.menu.findItem(R.id.nav_premium).actionView as CheckBox
-        premiumBox.text = "Premium"
+        premiumBox.text = PremiumPackage().name
+        premiumBox.isChecked = true
         premiumBox.setOnCheckedChangeListener({
             _, isChecked -> onFilterSelected(DrawerItem.PREMIUM, if(isChecked) 1 else 0)
         })
 
         val luxuryBox = nav_view.menu.findItem(R.id.nav_luxury).actionView as CheckBox
-        luxuryBox.text = "Luxury"
+        luxuryBox.text = LuxuryPackage().name
+        luxuryBox.isChecked = true
         luxuryBox.setOnCheckedChangeListener({
             _, isChecked -> onFilterSelected(DrawerItem.LUXURY, if(isChecked) 1 else 0)
         })
 
         val vipBox = nav_view.menu.findItem(R.id.nav_vip).actionView as CheckBox
-        vipBox.text = "VIP"
+        vipBox.text = VipPackage().name
+        vipBox.isChecked = true
         vipBox.setOnCheckedChangeListener({
             _, isChecked -> onFilterSelected(DrawerItem.VIP, if(isChecked) 1 else 0)
         })
+
+        val favBox = nav_view.menu.findItem(R.id.nav_favorites).actionView as CheckBox
+        favBox.text = "Favorites"
+        favBox.setOnCheckedChangeListener({
+            _, isChecked -> onFilterSelected(DrawerItem.FAVORITES, if(isChecked) 1 else 0)
+        })
+
+        val orderTypeSpinner = nav_view.menu.findItem(R.id.nav_order_type).actionView as Spinner
+        val orderTypeAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.order_type))
+        orderTypeAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        orderTypeSpinner.adapter = orderTypeAdapter
+        orderTypeSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                // Nothing
+            }
+
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                onFilterSelected(DrawerItem.ORDERTYPE, position)
+            }
+        }
+
+        val orderSpinner = nav_view.menu.findItem(R.id.nav_order).actionView as Spinner
+        val orderAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.order))
+        orderAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        orderSpinner.adapter = orderAdapter
+        orderSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                // Nothing
+            }
+
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                onFilterSelected(DrawerItem.ORDER, position)
+            }
+        }
+
+        cleanFilters()
     }
 
     override fun setPage(page: Int) {
@@ -128,13 +178,26 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
                         DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
-    fun onFilterSelected(item: DrawerItem, value: Int) {
-        // Handle navigation view item clicks here.
+    fun cleanFilters() {
+        val currentFrag = mSectionsPagerAdapter?.getItem(container.currentItem)
+        if(currentFrag is DrawerListener) {
+            currentFrag.cleanFilters()
+        }
+    }
 
+    fun onFilterSelected(item: DrawerItem, value: Int) {
         val currentFrag = mSectionsPagerAdapter?.getItem(container.currentItem)
         if(currentFrag is DrawerListener) {
             currentFrag.onFilterSelected(Pair(item, value))
         }
+    }
+
+    override fun onHouseClicked(house: House) {
+        launchActivityWithExtras<HouseDetailsActivity>(
+                HouseDetailsActivity::class,
+                arrayOf(HousePhotoFragment.HOUSE_EXTRA),
+                arrayOf(house),
+                false)
     }
 
     override fun openDrawer() {
@@ -154,6 +217,10 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
     }
 
     override fun isDrawerOpened() = drawer_layout.isDrawerOpen(GravityCompat.END)
+
+    override fun getActivity(): AppCompatActivity {
+        return this
+    }
 
     override fun onBackPressed() {
         if (container.currentItem == 1 && drawer_layout.isDrawerOpen(GravityCompat.END)) {

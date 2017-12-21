@@ -1,8 +1,10 @@
-package com.vvissen
+package com.vvissen.activities
 
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import com.vvissen.R
+import com.vvissen.launchActivity
 
 class SplashscreenActivity : AppCompatActivity() {
 
@@ -13,6 +15,6 @@ class SplashscreenActivity : AppCompatActivity() {
         Handler().postDelayed({
             launchActivity(MainActivity::class)
             finish()
-        }, 2000)
+        }, 1000)
     }
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_botton_bar"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_gravity="bottom"
+    android:elevation="4dp"
+    android:background="?attr/colorPrimary">
+
+    <Button
+        android:id="@+id/bt_start_match"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="start match"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="2">
+
+            <TextView
+                android:id="@+id/tv_house_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="18sp"
+                android:layout_gravity="end|center_vertical"
+                android:textColor="@color/colorAccent"
+                tools:text="U$3,500"/>
+
+            <TextView
+                android:id="@+id/tv_total_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="14sp"
+                android:layout_gravity="start|center_vertical"
+                android:textColor="@android:color/white"
+                android:text="total"/>
+
+            <TextView
+                android:id="@+id/tv_house_price_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="12sp"
+                android:layout_gravity="end|center_vertical"
+                android:alpha="0.8"
+                android:textColor="@android:color/white"
+                tools:text="U$2,500"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="12sp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="start|center_vertical"
+                android:alpha="0.8"
+                android:textColor="@android:color/white"
+                android:text="per weekend"/>
+        </GridLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

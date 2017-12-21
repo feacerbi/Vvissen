@@ -6,13 +6,13 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.vvissen.HousesFragment">
+    tools:context="com.vvissen.fragments.HousesFragment">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_houses"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimaryDark"
+            android:layout_height="56dp"
+            android:background="@color/backgroundDefault"
             android:elevation="4dp"
             app:title=""
             app:navigationIcon="@drawable/ic_person_black_24dp"
@@ -21,6 +21,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_marginEnd="16dp"
                     android:src="@drawable/brand_new"/>
 
         </android.support.v7.widget.Toolbar>

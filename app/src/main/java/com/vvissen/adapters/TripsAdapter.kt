@@ -1,12 +1,16 @@
-package com.vvissen
+package com.vvissen.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
+import com.vvissen.R
+import com.vvissen.inflate
 import com.vvissen.model.LuxuryPackage
 import com.vvissen.model.PremiumPackage
 import com.vvissen.model.Trip
+import com.vvissen.noDecimals
+import com.vvissen.toPeriodDate
 import kotlinx.android.synthetic.main.trip_card_item.view.*
 import java.text.NumberFormat
 import java.util.*

@@ -1,5 +1,8 @@
 package com.vvissen.model
 
-abstract class Package(
-        val name: String,
-        val description: String)
+import org.parceler.Parcel
+
+@Parcel
+open class Package(
+        var name: String = "VIP",
+        var description: String = "Good package")

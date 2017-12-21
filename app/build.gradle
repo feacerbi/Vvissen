@@ -38,4 +38,14 @@ dependencies {
 
     // Picasso
     implementation "com.squareup.picasso:picasso:2.5.2"
+
+    // Parceler
+    implementation 'org.parceler:parceler-api:1.1.9'
+    kapt 'org.parceler:parceler:1.1.9'
+
+    // ViewPageIndicator
+    implementation 'com.github.tabassumLatif:ViewPagerIndicator:1.0.3'
+
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }

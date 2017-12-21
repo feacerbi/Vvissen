@@ -1,17 +1,21 @@
-package com.vvissen
+package com.vvissen.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
+import com.vvissen.HouseListClickListener
+import com.vvissen.R
+import com.vvissen.inflate
 import com.vvissen.model.House
 import com.vvissen.model.LuxuryPackage
 import com.vvissen.model.PremiumPackage
+import com.vvissen.noDecimals
 import kotlinx.android.synthetic.main.house_card_item.view.*
 import java.text.NumberFormat
 import java.util.*
 
-class HousesAdapter(private val houses: ArrayList<House> = arrayListOf())
+class HousesAdapter(private val listener: HouseListClickListener, private var houses: Array<House> = arrayOf())
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -34,6 +38,24 @@ class HousesAdapter(private val houses: ArrayList<House> = arrayListOf())
                     .placeholder(photo)
                     .error(photo)
                     .into(iv_place_photo)
+
+            if(house.favorite) {
+                iv_favorite_button.setImageResource(R.drawable.ic_favorite_black_24dp)
+            } else {
+                iv_favorite_button.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+            }
+
+            iv_favorite_button.setOnClickListener {
+                if(house.favorite) {
+                    iv_favorite_button.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+                } else {
+                    iv_favorite_button.setImageResource(R.drawable.ic_favorite_black_24dp)
+                }
+            }
+
+            setOnClickListener {
+                listener.onHouseClicked(house)
+            }
         }
 
     }
@@ -44,6 +66,11 @@ class HousesAdapter(private val houses: ArrayList<House> = arrayListOf())
 
     override fun getItemCount(): Int {
         return houses.size
+    }
+
+    fun setItems(items: Array<House>) {
+        houses = items
+        notifyDataSetChanged()
     }
 
     open class HousesViewHolder(view: View) : RecyclerView.ViewHolder(view)

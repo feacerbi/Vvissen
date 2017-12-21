@@ -6,6 +6,6 @@
     android:layout_height="wrap_content"
     android:spinnerMode="dropdown"
     android:layout_marginTop="16dp"
-    android:gravity="end"
+    android:gravity="end|center_vertical"
     tools:listitem="@layout/spinner_item" >
 </Spinner>

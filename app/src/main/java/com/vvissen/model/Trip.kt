@@ -22,7 +22,7 @@ data class Trip(
     fun createFakeTrip2(): Trip {
         house = House().createFakeHouse2()
         guests = mutableMapOf(Pair(User("1"), false), Pair(User("2"), true), Pair(User("3"), true), Pair(User("4"), false), Pair(User("5"), true), Pair(User("6"), true), Pair(User("7"), false), Pair(User("8"), true), Pair(User("9"), true), Pair(User("10"), true))
-        groupType = GroupFriends55()
+        groupType = GroupGroups()
         period = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().rollDays(30).timeInMillis)
         confirmed = true
         return this
@@ -31,7 +31,7 @@ data class Trip(
     fun createFakeTrip3(): Trip {
         house = House().createFakeHouse3()
         guests = mutableMapOf(Pair(User("1"), true), Pair(User("2"), true), Pair(User("3"), true), Pair(User("4"), true), Pair(User("5"), true), Pair(User("6"), true), Pair(User("7"), true), Pair(User("8"), true), Pair(User("9"), true), Pair(User("10"), true))
-        groupType = GroupFriends10()
+        groupType = GroupFriends()
         period = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().rollDays(18).timeInMillis)
         confirmed = true
         return this

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
@@ -15,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListAdapter
+import org.parceler.Parcels
 import java.io.Serializable
 import java.util.*
 import kotlin.reflect.KClass
@@ -276,14 +276,15 @@ fun <T : Any> Activity.launchActivityWithExtras(
 
     if(identifiers != null && extras != null) {
         for (extra in extras) {
+
             if (extra is String) {
                 intent.putExtra(identifiers[extras.indexOf(extra)], extra)
             } else if (extra is Int) {
                 intent.putExtra(identifiers[extras.indexOf(extra)], extra)
             } else if (extra is Boolean) {
                 intent.putExtra(identifiers[extras.indexOf(extra)], extra)
-            } else if(extra is Parcelable) {
-                intent.putExtra(identifiers[extras.indexOf(extra)], extra)
+            } else {
+                intent.putExtra(identifiers[extras.indexOf(extra)], Parcels.wrap(extra))
             }
         }
     }
