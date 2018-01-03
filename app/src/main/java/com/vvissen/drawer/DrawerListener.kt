@@ -1,6 +1,6 @@
-package com.vvissen
+package com.vvissen.drawer
 
 interface DrawerListener {
     fun onFilterSelected(pair: Pair<DrawerItem, Int>)
-    fun cleanFilters()
+    fun clearFilters()
 }

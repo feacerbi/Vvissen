@@ -6,4 +6,7 @@
     <color name="colorWhite">#FAFAFA</color>
 
     <color name="backgroundDefault">#303030</color>
+
+    <color name="ready">#4CAF50</color>
+    <color name="match">#F44336</color>
 </resources>

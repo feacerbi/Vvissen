@@ -9,6 +9,9 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import com.vvissen.R
 import com.vvissen.model.House
+import com.vvissen.model.PackageLuxury
+import com.vvissen.model.PackagePremium
+import com.vvissen.model.PackageVip
 import org.parceler.Parcels
 
 /**
@@ -38,15 +41,47 @@ class HousePhotoFragment : Fragment() {
         val house = Parcels.unwrap(arguments?.getParcelable(HOUSE_EXTRA)) as House
         val photoNumber = Parcels.unwrap(arguments?.getParcelable(PHOTO_EXTRA)) as Int
 
-        val photo = when(photoNumber) {
-            0 -> R.drawable.front
-            1 -> R.drawable.bedroom
-            2 -> R.drawable.bathroom
-            3 -> R.drawable.outside
-            4 -> R.drawable.pool
-            5 -> R.drawable.stairs
-            else -> R.drawable.front
+        var photo = R.drawable.cancun_front
+
+        when(house.packageTier.name) {
+            PackagePremium().name -> {
+                photo = when(photoNumber) {
+                    0 -> R.drawable.cancun_front
+                    1 -> R.drawable.cancun_bedroom
+                    2 -> R.drawable.cancun_bathroom
+                    3 -> R.drawable.cancun_outside
+                    4 -> R.drawable.cancun_pool
+                    5 -> R.drawable.cancun_stairs
+                    else -> R.drawable.cancun_front
+                }
+            }
+            PackageLuxury().name -> {
+                photo = when (photoNumber) {
+                    0 -> R.drawable.rio_bar
+                    1 -> R.drawable.rio_bath
+                    2 -> R.drawable.rio_eat
+                    3 -> R.drawable.rio_living
+                    4 -> R.drawable.rio_room
+                    5 -> R.drawable.rio_tv
+                    6 -> R.drawable.rio_out
+                    else -> R.drawable.rio_out
+                }
+            }
+            PackageVip().name -> {
+                photo = when (photoNumber) {
+                    0 -> R.drawable.mare_barb
+                    1 -> R.drawable.mare_cine
+                    2 -> R.drawable.mare_living
+                    3 -> R.drawable.mare_out
+                    4 -> R.drawable.mare_room
+                    5 -> R.drawable.mare_solar
+                    6 -> R.drawable.mare_tub
+                    else -> R.drawable.cancun_front
+                }
+            }
         }
+
+
 
         if(view is ImageView) {
             with(view) {

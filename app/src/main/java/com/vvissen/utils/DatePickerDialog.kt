@@ -1,4 +1,4 @@
-package com.vvissen
+package com.vvissen.utils
 
 import android.app.DatePickerDialog
 import android.app.Dialog

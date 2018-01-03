@@ -1,4 +1,14 @@
 package com.vvissen.model
 
-class GroupFriends : GroupType("friends", 10){
+import org.parceler.Parcel
+
+@Parcel
+class GroupFriends : GroupType(){
+
+    init {
+        name = "Friends"
+        size = 10
+        info = "Gather your friends and go have a dream like trip"
+    }
+
 }

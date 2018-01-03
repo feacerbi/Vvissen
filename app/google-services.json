@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "269525284137",
+    "firebase_url": "https://vvissen-fb9b9.firebaseio.com",
+    "project_id": "vvissen-fb9b9",
+    "storage_bucket": "vvissen-fb9b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269525284137:android:6850ca662fbd2763",
+        "android_client_info": {
+          "package_name": "com.vvissen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269525284137-7jps39iclol4p6ctabqthjs4f2josn1o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vvissen",
+            "certificate_hash": "c09cfefc034b1b1f7d803663961cadb5d330e372"
+          }
+        },
+        {
+          "client_id": "269525284137-pah7akj1p2dbb2002r3b0bof9tmeuf9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2zMK1Wacb-5IsY3oGy70d8f6ldTH-7l8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269525284137-pah7akj1p2dbb2002r3b0bof9tmeuf9n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

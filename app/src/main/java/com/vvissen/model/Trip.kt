@@ -1,49 +1,80 @@
 package com.vvissen.model
 
-import com.vvissen.rollDays
+import com.vvissen.utils.daysTo
+import com.vvissen.utils.rollDays
+import org.parceler.Parcel
 import java.util.*
 
+@Parcel
 data class Trip(
         var house: House = House(),
-        var guests: MutableMap<User, Boolean> = mutableMapOf(User("1") to true, User("2") to true),
+        var guests: MutableMap<User, Status> = mutableMapOf(),
         var groupType: GroupType = GroupRandom(),
-        var confirmed: Boolean = false,
         var period: Pair<Long, Long> = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().timeInMillis)
 ) {
 
     fun createFakeTrip(): Trip {
         house = House().createFakeHouse()
-        groupType = GroupRandom()
+        groupType = GroupFriends()
         period = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().rollDays(10).timeInMillis)
-        confirmedGuests()
+        getUserList1().forEach { guests.put(it, StatusPending()) }
+        getUserList2().forEach { guests.put(it, StatusReady()) }
         return this
     }
 
     fun createFakeTrip2(): Trip {
         house = House().createFakeHouse2()
-        guests = mutableMapOf(Pair(User("1"), false), Pair(User("2"), true), Pair(User("3"), true), Pair(User("4"), false), Pair(User("5"), true), Pair(User("6"), true), Pair(User("7"), false), Pair(User("8"), true), Pair(User("9"), true), Pair(User("10"), true))
         groupType = GroupGroups()
         period = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().rollDays(30).timeInMillis)
-        confirmed = true
+        getUserList1().forEach { guests.put(it, StatusReady()) }
+        getUserList2().forEach { guests.put(it, StatusReady()) }
         return this
     }
 
     fun createFakeTrip3(): Trip {
         house = House().createFakeHouse3()
-        guests = mutableMapOf(Pair(User("1"), true), Pair(User("2"), true), Pair(User("3"), true), Pair(User("4"), true), Pair(User("5"), true), Pair(User("6"), true), Pair(User("7"), true), Pair(User("8"), true), Pair(User("9"), true), Pair(User("10"), true))
-        groupType = GroupFriends()
+        groupType = GroupRandom()
         period = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().rollDays(18).timeInMillis)
-        confirmed = true
+        getUserList1().forEach { guests.put(it, StatusLiked()) }
+        getUserList2().forEach { guests.put(it, StatusMatch()) }
         return this
     }
+
+    fun getUserList1() = arrayListOf(
+            User().createFakeUser(),
+            User().createFakeUser2(),
+            User().createFakeUser3())
+
+    fun getUserList2() = arrayListOf(
+            User().createFakeUser4(),
+            User().createFakeUser5())
+
+    fun isConfirmed() = confirmedGuests() == groupType.size/2
+    fun isReady() = readyGuests() == groupType.size/2
 
     fun confirmedGuests(): Int {
         var confirmedNumber = 0
 
-        for((_, confirmed) in guests) {
-            if(confirmed) confirmedNumber++
+        for((_, status) in guests) {
+            if(status.name == StatusMatch().name) confirmedNumber++
+            if(status.name == StatusPending().name) confirmedNumber++
+            if(status.name == StatusReady().name) confirmedNumber++
         }
 
         return confirmedNumber
     }
+
+    fun readyGuests(): Int {
+        var readyNumber = 0
+
+        for((_, status) in guests) {
+            if(status.name == StatusReady().name) readyNumber++
+        }
+
+        return readyNumber
+    }
+
+    fun totalDays() = period.first.daysTo(period.second)
+
+    fun totalPrice(): Double = house.price / 2 * totalDays()
 }

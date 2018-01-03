@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vvissen.activities.LoginActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/colorPrimaryDark" >
+
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Welcome"/>
+
+        <TextView
+            android:id="@+id/sign_in_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/welcome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
+            android:text="Sign in to start enjoying the perfect trip."/>
+
+        <com.vvissen.SupportVectorDrawablesButton
+            android:id="@+id/svdb_facebook_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginEnd="72dp"
+            app:layout_constraintTop_toBottomOf="@id/sign_in_message"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/LoginButton.Facebook"
+            android:text="Continue with Facebook" />
+
+        <com.vvissen.SupportVectorDrawablesButton
+            android:id="@+id/svdb_google_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginEnd="72dp"
+            app:layout_constraintTop_toBottomOf="@id/svdb_facebook_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/LoginButton.Google"
+            android:text="Continue with Google" />
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/back"
+        android:scaleType="centerCrop"
+        android:src="@drawable/toast"/>
+
+    <View
+        android:id="@+id/back_photo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/back"
+        android:alpha="0.5"
+        android:background="@android:color/black" />
+
+    <ImageView
+        android:layout_height="100dp"
+        android:layout_width="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/back_photo"
+        android:src="@drawable/logo"/>
+
+    <TextView
+        android:id="@+id/scrim"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/back_photo"
+        android:background="@drawable/shape_scrim_dark"/>
+
+</android.support.constraint.ConstraintLayout>

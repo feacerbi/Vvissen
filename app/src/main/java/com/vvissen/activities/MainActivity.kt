@@ -6,22 +6,22 @@ import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.Spinner
-import com.vvissen.*
+import android.widget.*
+import com.vvissen.R
 import com.vvissen.adapters.MainPagerAdapter
+import com.vvissen.adapters.listeners.HouseListClickListener
+import com.vvissen.adapters.listeners.TripListClickListener
+import com.vvissen.drawer.DrawerController
+import com.vvissen.drawer.DrawerItem
+import com.vvissen.drawer.DrawerListener
 import com.vvissen.fragments.HousePhotoFragment
-import com.vvissen.model.House
-import com.vvissen.model.LuxuryPackage
-import com.vvissen.model.PremiumPackage
-import com.vvissen.model.VipPackage
+import com.vvissen.model.*
+import com.vvissen.utils.PagerController
+import com.vvissen.utils.launchActivityWithExtras
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), PagerController, DrawerController, ViewPager.OnPageChangeListener, HouseListClickListener {
+class MainActivity : AppCompatActivity(), PagerController, DrawerController, ViewPager.OnPageChangeListener, HouseListClickListener, TripListClickListener {
 
     /**
      * The [android.support.v4.view.PagerAdapter] that will provide
@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
             }
 
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Log.d("Main", "Country! " + position)
                 var newCitiesAdapter: ArrayAdapter<String>? = null
 
                 when(position) {
@@ -99,21 +98,21 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
         }
 
         val premiumBox = nav_view.menu.findItem(R.id.nav_premium).actionView as CheckBox
-        premiumBox.text = PremiumPackage().name
+        premiumBox.text = PackagePremium().name
         premiumBox.isChecked = true
         premiumBox.setOnCheckedChangeListener({
             _, isChecked -> onFilterSelected(DrawerItem.PREMIUM, if(isChecked) 1 else 0)
         })
 
         val luxuryBox = nav_view.menu.findItem(R.id.nav_luxury).actionView as CheckBox
-        luxuryBox.text = LuxuryPackage().name
+        luxuryBox.text = PackageLuxury().name
         luxuryBox.isChecked = true
         luxuryBox.setOnCheckedChangeListener({
             _, isChecked -> onFilterSelected(DrawerItem.LUXURY, if(isChecked) 1 else 0)
         })
 
         val vipBox = nav_view.menu.findItem(R.id.nav_vip).actionView as CheckBox
-        vipBox.text = VipPackage().name
+        vipBox.text = PackageVip().name
         vipBox.isChecked = true
         vipBox.setOnCheckedChangeListener({
             _, isChecked -> onFilterSelected(DrawerItem.VIP, if(isChecked) 1 else 0)
@@ -155,7 +154,20 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
             }
         }
 
-        cleanFilters()
+        val clearButton = nav_view.menu.findItem(R.id.nav_button_clear).actionView as Button
+        clearButton.setOnClickListener {
+            clearFilters()
+
+            countriesSpinner.setSelection(0)
+            premiumBox.isChecked = true
+            luxuryBox.isChecked = true
+            vipBox.isChecked = true
+            orderTypeSpinner.setSelection(0)
+            orderSpinner.setSelection(0)
+            favBox.isChecked = false
+        }
+
+        clearFilters()
     }
 
     override fun setPage(page: Int) {
@@ -178,10 +190,10 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
                         DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
-    fun cleanFilters() {
+    fun clearFilters() {
         val currentFrag = mSectionsPagerAdapter?.getItem(container.currentItem)
         if(currentFrag is DrawerListener) {
-            currentFrag.cleanFilters()
+            currentFrag.clearFilters()
         }
     }
 
@@ -197,6 +209,14 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
                 HouseDetailsActivity::class,
                 arrayOf(HousePhotoFragment.HOUSE_EXTRA),
                 arrayOf(house),
+                false)
+    }
+
+    override fun onTripClicked(trip: Trip) {
+        launchActivityWithExtras<TripActivity>(
+                TripActivity::class,
+                arrayOf(TripActivity.TRIP_EXTRA),
+                arrayOf(trip),
                 false)
     }
 

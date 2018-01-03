@@ -1,4 +1,4 @@
-package com.vvissen
+package com.vvissen.utils
 
 import android.support.v7.app.AppCompatActivity
 

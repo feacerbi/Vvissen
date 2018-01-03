@@ -1,4 +1,4 @@
-package com.vvissen
+package com.vvissen.utils
 
 import android.app.Activity
 import android.content.Context
@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.ListAdapter
 import org.parceler.Parcels
 import java.io.Serializable
+import java.text.NumberFormat
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -71,6 +72,8 @@ fun String.toFormatedDate(): String {
 
 fun Long.toPeriodDate(): String = DateFormat.format("MMM dd", this).toString()
 
+fun Long.toFullPeriodDate(): String = DateFormat.format("EEE, MMM dd, yyyy", this).toString()
+
 fun String.toFormatedWebsite(): String {
     if(this.contains("www") || !this.contains("//")) return this
 
@@ -78,6 +81,8 @@ fun String.toFormatedWebsite(): String {
 }
 
 fun String.noDecimals() = this.substring(0, this.lastIndexOf('.'))
+
+fun Double.toCurrency() = String.format(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(this).noDecimals())
 
 fun Long.toDistanceUnits(): String {
     var unit = "m"
@@ -98,6 +103,18 @@ fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
 fun Calendar.rollDays(amount: Int): Calendar {
     set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH) + amount)
     return this
+}
+
+fun Calendar.daysTo(calendar: Calendar): Int {
+    val period = calendar.timeInMillis - this.timeInMillis
+
+    return Math.abs(period.toInt() / 86400000)
+}
+
+fun Long.daysTo(calendar: Long): Int {
+    val period = calendar - this
+
+    return Math.abs(period.toInt() / 86400000)
 }
 
 fun AlertDialog.Builder.showOneChoiceCancelableDialog(

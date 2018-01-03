@@ -4,13 +4,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
-import com.vvissen.HouseListClickListener
 import com.vvissen.R
-import com.vvissen.inflate
+import com.vvissen.adapters.listeners.HouseListClickListener
 import com.vvissen.model.House
-import com.vvissen.model.LuxuryPackage
-import com.vvissen.model.PremiumPackage
-import com.vvissen.noDecimals
+import com.vvissen.model.PackageLuxury
+import com.vvissen.model.PackagePremium
+import com.vvissen.utils.inflate
+import com.vvissen.utils.noDecimals
 import kotlinx.android.synthetic.main.house_card_item.view.*
 import java.text.NumberFormat
 import java.util.*
@@ -29,7 +29,7 @@ class HousesAdapter(private val listener: HouseListClickListener, private var ho
             tv_house_rating_grade.text = house.rating.toString()
             tv_house_rating.rating = house.rating
 
-            val photo = if(house.packageTier is PremiumPackage) R.drawable.cancun else if(house.packageTier is LuxuryPackage) R.drawable.rio else R.drawable.maresias
+            val photo = if(house.packageTier is PackagePremium) R.drawable.cancun else if(house.packageTier is PackageLuxury) R.drawable.rio else R.drawable.maresias
 
             Picasso.with(context)
                     .load("error")

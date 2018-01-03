@@ -7,12 +7,18 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.vvissen.*
+import com.vvissen.R
 import com.vvissen.adapters.HousesAdapter
+import com.vvissen.adapters.listeners.HouseListClickListener
+import com.vvissen.drawer.DrawerController
+import com.vvissen.drawer.DrawerItem
+import com.vvissen.drawer.DrawerListener
 import com.vvissen.model.House
-import com.vvissen.model.LuxuryPackage
-import com.vvissen.model.PremiumPackage
-import com.vvissen.model.VipPackage
+import com.vvissen.model.PackageLuxury
+import com.vvissen.model.PackagePremium
+import com.vvissen.model.PackageVip
+import com.vvissen.utils.PagerController
+import kotlinx.android.synthetic.main.fragment_houses.*
 import kotlinx.android.synthetic.main.fragment_houses.view.*
 
 /**
@@ -21,9 +27,9 @@ import kotlinx.android.synthetic.main.fragment_houses.view.*
 class HousesFragment : Fragment(), DrawerListener {
 
     companion object {
-        val VIP_TIER_PACKAGE = Pair(0, VipPackage().name)
-        val LUXURY_TIER_PACKAGE = Pair(1, LuxuryPackage().name)
-        val PREMIUM_TIER_PACKAGE = Pair(2, PremiumPackage().name)
+        val VIP_TIER_PACKAGE = Pair(0, PackageVip().name)
+        val LUXURY_TIER_PACKAGE = Pair(1, PackageLuxury().name)
+        val PREMIUM_TIER_PACKAGE = Pair(2, PackagePremium().name)
         val FAVORITES = 3
 
         val COUNTRY = 0
@@ -42,9 +48,7 @@ class HousesFragment : Fragment(), DrawerListener {
         arrayListOf(
                 House().createFakeHouse(),
                 House().createFakeHouse2(),
-                House().createFakeHouse3(),
-                House().createFakeHouse2(),
-                House().createFakeHouse())
+                House().createFakeHouse3())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -139,9 +143,11 @@ class HousesFragment : Fragment(), DrawerListener {
         if (selectedSpinners[ORDER] == 1) filteredList.reverse()
 
         housesAdapter?.setItems(filteredList.toTypedArray())
+
+        tv_empty.visibility = if(filteredList.isEmpty()) View.VISIBLE else View.GONE
     }
 
-    override fun cleanFilters() {
+    override fun clearFilters() {
         selectedPackages[VIP_TIER_PACKAGE.first] = true
         selectedPackages[LUXURY_TIER_PACKAGE.first] = true
         selectedPackages[PREMIUM_TIER_PACKAGE.first] = true

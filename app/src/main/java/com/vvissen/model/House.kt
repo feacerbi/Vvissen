@@ -14,7 +14,7 @@ data class House (
         var ratingCount: Int = 0,
         var favorite: Boolean = false,
         var photos: Array<String?> = arrayOf("error"),
-        var packageTier: Package = VipPackage()) : Comparable<House> {
+        var packageTier: Package = PackageVip()) : Comparable<House> {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -49,11 +49,11 @@ data class House (
     fun createFakeHouse(): House {
         name = "The Great Tent House"
         price = 6800.0
-        description = "Close to Sirena Club\n200m from the Beach\n4 Suites with Queen Size beds\n6 Bathrooms"
-        address = "Rua Francisco Loup, 1109 - Praia de Maresias, São Sebastião - SP, 11600-000"
+        description = "Privacy like no other\nSurrounded by water\n4 Suites with Queen Size beds\n4 Bathrooms"
+        address = "Av Tulum 13-14, Capilla Ecumenica, 22, 77500 Cancún, Q.R., Mexico"
         place = "Cancún"
         photos = arrayOfNulls<String>(6)
-        packageTier = PremiumPackage()
+        packageTier = PackagePremium()
         rating = 4.5F
         ratingCount = 153
         favorite = true
@@ -63,11 +63,11 @@ data class House (
     fun createFakeHouse2(): House {
         name = "Hill Sight Infinite Pool"
         price = 4600.0
-        description = "Close to Sirena Club\n200m from the Beach\n4 Suites with Queen Size beds\n6 Bathrooms"
-        address = "Rua Francisco Loup, 1109 - Praia de Maresias, São Sebastião - SP, 11600-000"
+        description = "Easy access to the beach\nNice panoramic view\n3 Suites with Queen Size beds\n4 Bathrooms"
+        address = "Av. Embaixador Abelardo Bueno, 1430 - Barra da Tijuca, Rio de Janeiro - RJ, 22775-040"
         place = "Rio de Janeiro"
-        photos = arrayOfNulls<String>(6)
-        packageTier = LuxuryPackage()
+        photos = arrayOfNulls<String>(7)
+        packageTier = PackageLuxury()
         ratingCount = 58
         return this
     }
@@ -79,7 +79,7 @@ data class House (
         address = "Rua Francisco Loup, 1109 - Praia de Maresias, São Sebastião - SP, 11600-000"
         place = "Maresias"
         photos = arrayOfNulls<String>(6)
-        packageTier = VipPackage()
+        packageTier = PackageVip()
         rating = 4F
         ratingCount = 36
         favorite = true

@@ -45,7 +45,7 @@ class UserPhotoFragment : Fragment() {
                 Picasso.with(context)
                         .load(photo)
                         .fit()
-                        .centerInside()
+                        .centerCrop()
                         .into(view)
             }
         }

@@ -1,19 +1,24 @@
 package com.vvissen.activities
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.DatePicker
+import android.widget.Toast
 import com.vvissen.R
 import com.vvissen.adapters.HousePhotosPagerAdapter
 import com.vvissen.adapters.ProfilePicturesAdapter
 import com.vvissen.fragments.HousePhotoFragment
-import com.vvissen.launchActivity
 import com.vvissen.model.*
-import com.vvissen.noDecimals
-import com.vvissen.rollDays
+import com.vvissen.utils.launchActivityWithExtras
+import com.vvissen.utils.noDecimals
+import com.vvissen.utils.rollDays
+import com.vvissen.utils.toCurrency
 import kotlinx.android.synthetic.main.activity_house_details.*
 import kotlinx.android.synthetic.main.start_match_toolbar.*
 import kotlinx.android.synthetic.main.trip_type_friends_list_item.*
@@ -28,9 +33,6 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     companion object {
         val CHECKIN_BUTTON = 0
         val CHECKOUT_BUTTON = 1
-        val RANDOM_BUTTON = 0
-        val GROUPS_BUTTON = 1
-        val FRIENDS_BUTTON = 2
     }
 
     /**
@@ -45,11 +47,13 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     var dateButton = CHECKIN_BUTTON
     var checkinDate = Calendar.getInstance(Locale.getDefault())
     var checkoutDate = Calendar.getInstance().rollDays(2)
-    var period = 3
-    var tripType = RANDOM_BUTTON
 
     val house by lazy {
         Parcels.unwrap(intent.getParcelableExtra(HousePhotoFragment.HOUSE_EXTRA)) as House
+    }
+
+    val trip by lazy {
+        if(house.packageTier.name == PackagePremium().name) Trip().createFakeTrip() else if(house.packageTier.name == PackageLuxury().name) Trip().createFakeTrip2() else Trip().createFakeTrip3()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,15 +62,20 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
         setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener { onBackPressed() }
-        title = house.name
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapterHouse = HousePhotosPagerAdapter(supportFragmentManager, house)
+
+        updateTripDates()
+        trip.groupType = GroupRandom()
 
         setUpUI()
     }
 
     private fun setUpUI() {
+        title = house.name
+
         // Set up the ViewPager with the sections adapter.
         vp_photos.adapter = mSectionsPagerAdapterHouse
 
@@ -78,6 +87,7 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         tv_house_rating_grade.text = house.rating.toString()
         tv_rating_count.text = String.format("(%d)", house.ratingCount)
         tv_house_info.text = house.description
+        tv_groups_info.text = GroupRandom().info
 
         rv_profiles_list.adapter = ProfilePicturesAdapter(arrayOf(
                 R.drawable.brunette,
@@ -107,29 +117,100 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         tv_house_address.text = house.address
         tv_house_price_rate.text = String.format("U${NumberFormat.getCurrencyInstance(Locale.getDefault()).format(house.price).noDecimals()}")
 
+        iv_house_map_icon.setOnClickListener {
+            openMap()
+        }
+
         calcPeriodAndPrice()
 
         cl_trip_type_random_button.setOnClickListener {
-            tripType = RANDOM_BUTTON
+            trip.groupType = GroupRandom()
             selectTripType(true, cl_trip_type_random_button, GroupRandom())
-            selectTripType(false, cl_trip_type_groups_button, GroupGroups())
             selectTripType(false, cl_trip_type_friends_button, GroupFriends())
+            selectTripType(false, cl_trip_type_groups_button, GroupGroups())
+
+            tv_confirmed_title.visibility = View.VISIBLE
+            rv_profiles_list.visibility = View.VISIBLE
+            v_separator2.visibility = View.VISIBLE
+
+            rv_profiles_list.adapter = ProfilePicturesAdapter(arrayOf(
+                    R.drawable.brunette,
+                    R.drawable.brunette2,
+                    R.drawable.brunette4,
+                    R.drawable.brunette5,
+                    R.drawable.blonde,
+                    R.drawable.blonde2,
+                    R.drawable.red,
+                    R.drawable.japa))
+
+            bt_start_match.text = "Start Match"
+            bt_start_match.setOnClickListener {
+                openMatcher()
+            }
         }
+
         cl_trip_type_groups_button.setOnClickListener {
-            tripType = GROUPS_BUTTON
-            selectTripType(true, cl_trip_type_groups_button, GroupGroups())
+            trip.groupType = GroupGroups()
             selectTripType(false, cl_trip_type_random_button, GroupRandom())
             selectTripType(false, cl_trip_type_friends_button, GroupFriends())
+            selectTripType(true, cl_trip_type_groups_button, GroupGroups())
+
+            tv_confirmed_title.visibility = View.VISIBLE
+            rv_profiles_list.visibility = View.VISIBLE
+            v_separator2.visibility = View.VISIBLE
+
+            rv_profiles_list.adapter = ProfilePicturesAdapter(arrayOf(
+                    R.drawable.blonde,
+                    R.drawable.blonde2,
+                    R.drawable.red,
+                    R.drawable.japa,
+                    R.drawable.brunette,
+                    R.drawable.brunette2,
+                    R.drawable.brunette4,
+                    R.drawable.brunette5,
+                    R.drawable.brunette6))
+
+            bt_start_match.text = "Start Match"
+            bt_start_match.setOnClickListener {
+                openMatcher()
+            }
         }
+
         cl_trip_type_friends_button.setOnClickListener {
-            tripType = FRIENDS_BUTTON
-            selectTripType(true, cl_trip_type_friends_button, GroupFriends())
+            trip.groupType = GroupFriends()
             selectTripType(false, cl_trip_type_random_button, GroupRandom())
+            selectTripType(true, cl_trip_type_friends_button, GroupFriends())
             selectTripType(false, cl_trip_type_groups_button, GroupGroups())
+
+            tv_confirmed_title.visibility = View.GONE
+            rv_profiles_list.visibility = View.GONE
+            v_separator2.visibility = View.GONE
+
+            bt_start_match.text = "Book"
+            bt_start_match.setOnClickListener {
+                Toast.makeText(this, "New trip added as Pending", Toast.LENGTH_SHORT).show()
+                finish()
+            }
         }
 
         bt_start_match.setOnClickListener {
-            launchActivity(MatchActivity::class)
+            openMatcher()
+        }
+    }
+
+    fun openMatcher() {
+        launchActivityWithExtras<MatchActivity>(
+                MatchActivity::class,
+                arrayOf(MatchActivity.TRIP_EXTRA),
+                arrayOf(trip),
+                false)
+    }
+
+    private fun openMap() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("geo:0,0?q=" + house.address)
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
         }
     }
 
@@ -159,13 +240,18 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             if(checkinDate >= checkoutDate) {
                 checkoutDate = Calendar.getInstance()
                 checkoutDate.timeInMillis = checkinDate.timeInMillis
-                checkoutDate.rollDays(period - 1)
+                checkoutDate.rollDays(trip.totalDays())
             }
         } else if (dateButton == CHECKOUT_BUTTON){
             checkoutDate.set(year, month, day)
         }
 
+        updateTripDates()
         calcPeriodAndPrice()
+    }
+
+    fun updateTripDates() {
+        trip.period = Pair(checkinDate.timeInMillis, checkoutDate.timeInMillis)
     }
 
     fun calcPeriodAndPrice() {
@@ -175,10 +261,7 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         tv_checkout_date_day.text = String.format("%2d", checkoutDate.get(Calendar.DAY_OF_MONTH))
         tv_checkout_date_month.text = checkoutDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
 
-        period = checkoutDate.get(Calendar.DAY_OF_MONTH) - checkinDate.get(Calendar.DAY_OF_MONTH) + 1
-        val total = house.price / 3 * period
-
-        tv_house_price.text = String.format("U${NumberFormat.getCurrencyInstance(Locale.getDefault()).format(total).noDecimals()}")
+        tv_house_price.text = trip.totalPrice().toCurrency()
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -202,6 +285,7 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     fun selectTripType(select: Boolean, button: ConstraintLayout, type: GroupType) {
         button.setBackgroundResource(if(select) R.drawable.shape_outline_accent else R.drawable.shape_outline_white)
+        if(select) tv_groups_info.text = type.info
 
         when(type) {
             is GroupRandom -> {

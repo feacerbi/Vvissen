@@ -1,4 +1,4 @@
-package com.vvissen
+package com.vvissen.drawer
 
 interface DrawerController {
     fun openDrawer()

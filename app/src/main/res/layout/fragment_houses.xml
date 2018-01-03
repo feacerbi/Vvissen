@@ -8,44 +8,47 @@
     android:layout_height="match_parent"
     tools:context="com.vvissen.fragments.HousesFragment">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_houses"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/backgroundDefault"
-            android:elevation="4dp"
-            app:title=""
-            app:navigationIcon="@drawable/ic_person_black_24dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_houses"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/backgroundDefault"
+        android:elevation="4dp"
+        app:title=""
+        app:navigationIcon="@drawable/ic_person_white_24dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay" >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/brand_new"/>
-
-        </android.support.v7.widget.Toolbar>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_houses_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_houses"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/house_card_item">
-        </android.support.v7.widget.RecyclerView>
-
-        <TextView
-            android:id="@+id/tv_empty"
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="16sp"
-            android:visibility="gone"
-            android:text="No houses available"/>
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/brand_new"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_houses_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_houses"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/house_card_item">
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_houses"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:visibility="visible"
+        android:text="No houses to show"/>
 
 </android.support.constraint.ConstraintLayout>

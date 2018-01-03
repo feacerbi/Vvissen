@@ -1,4 +1,4 @@
-package com.vvissen
+package com.vvissen.adapters.listeners
 
 import com.vvissen.model.House
 

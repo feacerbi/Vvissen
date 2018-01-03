@@ -7,10 +7,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.vvissen.PagerController
 import com.vvissen.R
 import com.vvissen.adapters.TripsAdapter
+import com.vvissen.adapters.listeners.TripListClickListener
 import com.vvissen.model.Trip
+import com.vvissen.utils.PagerController
 import kotlinx.android.synthetic.main.fragment_my_trips.view.*
 
 /**
@@ -25,7 +26,8 @@ class MyTripsFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_my_trips, container, false)
 
-        val tripsAdapter = TripsAdapter(arrayListOf(
+        val tripsAdapter = TripsAdapter(mListener as TripListClickListener,
+                arrayListOf(
                 Trip().createFakeTrip(),
                 Trip().createFakeTrip2(),
                 Trip().createFakeTrip3()))
@@ -41,8 +43,11 @@ class MyTripsFragment : Fragment() {
                     }
                     true
                 })
+
+                tv_empty.visibility = if(tripsAdapter.itemCount == 0) View.VISIBLE else View.GONE
             }
         }
+
 
         return view
     }
@@ -60,9 +65,4 @@ class MyTripsFragment : Fragment() {
         super.onDetach()
         mListener = null
     }
-
-//    fun checkEmpty(adapter: TripsAdapter, trips: ArrayList<Trip>) {
-//        rv_trips_list.visibility = if(trips.isEmpty()) View.INVISIBLE else View.VISIBLE
-//        tv_empty.visibility = if(trips.isEmpty()) View.VISIBLE else View.INVISIBLE
-//    }
 }

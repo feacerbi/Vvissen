@@ -11,4 +11,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_house_details">HouseDetailsActivity</string>
     <string name="title_activity_match">MatchActivity</string>
+    <string name="title_activity_trip">TripActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+
+    <string name="web_client_id">269525284137-pah7akj1p2dbb2002r3b0bof9tmeuf9n.apps.googleusercontent.com</string>
+
+    <string name="facebook_app_id">276962849370030</string>
+    <string name="fb_login_protocol_scheme">fb276962849370030</string>
+
 </resources>

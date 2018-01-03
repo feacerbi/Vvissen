@@ -9,6 +9,7 @@ data class User(
         var name: String = "",
         var age: Int = 18,
         var photos: Array<Int> = arrayOf(),
+        var shortDescription: String = "",
         var interest: Interest = Interest.Women) {
 
     override fun equals(other: Any?): Boolean {
@@ -36,6 +37,7 @@ data class User(
         age = 24
         photos = arrayOf(R.drawable.brunette, R.drawable.brunette2)
         interest = Interest.Men
+        shortDescription = "I`m really into photography."
         return this
     }
 
@@ -44,6 +46,7 @@ data class User(
         age = 27
         photos = arrayOf(R.drawable.brunette4, R.drawable.brunette5, R.drawable.brunette6)
         interest = Interest.Men
+        shortDescription = "Pretty much a music lover."
         return this
     }
 
@@ -52,6 +55,7 @@ data class User(
         age = 25
         photos = arrayOf(R.drawable.blonde, R.drawable.blonde2)
         interest = Interest.Men
+        shortDescription = "Beaches, sand, Sun and sea are my thing."
         return this
     }
 
@@ -60,6 +64,7 @@ data class User(
         age = 32
         photos = arrayOf(R.drawable.red)
         interest = Interest.Men
+        shortDescription = "I`m always up for a night out till the sunrise."
         return this
     }
 
@@ -68,6 +73,7 @@ data class User(
         age = 22
         photos = arrayOf(R.drawable.japa)
         interest = Interest.Men
+        shortDescription = "A good time spent in 2 is my first choice."
         return this
     }
 
