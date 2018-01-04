@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+                app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 tools:title="The Great Tent House" />
         </android.support.design.widget.CollapsingToolbarLayout>

@@ -1,4 +1,4 @@
-package com.vvissen
+package com.vvissen.views
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -7,6 +7,7 @@ import android.support.v4.widget.TextViewCompat
 import android.support.v7.content.res.AppCompatResources
 import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
+import com.vvissen.R
 
 
 class SupportVectorDrawablesButton : AppCompatButton {

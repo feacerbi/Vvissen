@@ -4,14 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.CalendarContract
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.squareup.picasso.Picasso
 import com.vvissen.R
 import com.vvissen.adapters.listeners.TripListClickListener
 import com.vvissen.model.*
 import com.vvissen.utils.inflate
+import com.vvissen.utils.showOneChoiceCancelableDialog
 import com.vvissen.utils.toCurrency
 import com.vvissen.utils.toPeriodDate
 import kotlinx.android.synthetic.main.trip_card_item.view.*
@@ -29,15 +32,16 @@ class TripsAdapter(private val listener: TripListClickListener, private val trip
             tv_package_tier.text = trip.house.packageTier.name
             tv_house_title.text = trip.house.name
             tv_dates.text = String.format("${trip.period.first.toPeriodDate()} - ${trip.period.second.toPeriodDate()}")
-            tv_house_people.text = String.format("${trip.groupType.name} trip")
+            tv_house_people.text = String.format("${trip.groupType.name.toLowerCase()} trip")
             tv_house_price.text = trip.totalPrice().toCurrency()
 
             var tripStatus: Status = StatusPending()
 
             if (trip.isReady()) {
                 tripStatus = StatusReady()
-                tv_status.text = tripStatus.name
+                tv_status.text = tripStatus.name.toLowerCase()
                 tv_status.setTextColor(resources.getColor(tripStatus.color))
+                iv_exit_button.visibility = View.INVISIBLE
             } else if(trip.isConfirmed()) {
                 tv_status.text = String.format("${trip.readyGuests()}/${trip.groupType.size} ready")
                 tv_status.setTextColor(resources.getColor(tripStatus.color))
@@ -67,6 +71,13 @@ class TripsAdapter(private val listener: TripListClickListener, private val trip
 
             iv_action_calendar.setOnClickListener {
                 addToCalendar(context, trip)
+            }
+
+            iv_exit_button.setOnClickListener {
+                AlertDialog.Builder(context).showOneChoiceCancelableDialog("Exit Trip", "Do you want to exit and remove this trip?", "Yes", {
+                    _, _ ->
+                    Toast.makeText(context, "Trip removed", Toast.LENGTH_SHORT).show()
+                })
             }
 
             setOnClickListener { listener.onTripClicked(trip) }

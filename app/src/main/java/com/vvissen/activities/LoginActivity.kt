@@ -3,6 +3,7 @@ package com.vvissen.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.Toast
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -74,10 +75,12 @@ class LoginActivity : AppCompatActivity(), FacebookCallback<LoginResult> {
 
     override fun onError(error: FacebookException) {
         Toast.makeText(this, "Facebook sign in fail: " + error.message, Toast.LENGTH_SHORT).show()
+        hideProgress()
     }
 
     override fun onCancel() {
         Toast.makeText(this, "Facebook sign in canceled", Toast.LENGTH_SHORT).show()
+        hideProgress()
     }
 
     override fun onStart() {
@@ -101,6 +104,7 @@ class LoginActivity : AppCompatActivity(), FacebookCallback<LoginResult> {
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Toast.makeText(this, "Google sign in fail: " + e.message, Toast.LENGTH_SHORT).show()
+                hideProgress()
             }
 
         }
@@ -114,6 +118,7 @@ class LoginActivity : AppCompatActivity(), FacebookCallback<LoginResult> {
                         checkSignedIn()
                     } else {
                         Toast.makeText(this, "Google sign in fail: " + task.exception, Toast.LENGTH_SHORT).show()
+                        hideProgress()
                     }
                 }
     }
@@ -126,6 +131,7 @@ class LoginActivity : AppCompatActivity(), FacebookCallback<LoginResult> {
                         checkSignedIn()
                     } else {
                         Toast.makeText(this, "Facebook sign in fail: " + task.exception, Toast.LENGTH_SHORT).show()
+                        hideProgress()
                     }
                 }
     }
@@ -136,14 +142,25 @@ class LoginActivity : AppCompatActivity(), FacebookCallback<LoginResult> {
         if(user != null) {
             launchActivity(MainActivity::class)
         }
+        hideProgress()
     }
 
     private fun signInWithGoogle() {
+        showProgress()
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     private fun signInWithFacebook() {
+        showProgress()
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"))
+    }
+
+    private fun showProgress() {
+        progress_bar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        progress_bar.visibility = View.INVISIBLE
     }
 }

@@ -35,8 +35,8 @@ data class Trip(
         house = House().createFakeHouse3()
         groupType = GroupRandom()
         period = Pair(Calendar.getInstance().timeInMillis, Calendar.getInstance().rollDays(18).timeInMillis)
-        getUserList1().forEach { guests.put(it, StatusLiked()) }
-        getUserList2().forEach { guests.put(it, StatusMatch()) }
+        getUserList1().forEach { guests.put(it, StatusMatch()) }
+        getUserList2().forEach { guests.put(it, StatusLiked()) }
         return this
     }
 

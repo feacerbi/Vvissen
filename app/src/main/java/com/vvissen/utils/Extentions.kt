@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListAdapter
 import org.parceler.Parcels
-import java.io.Serializable
 import java.text.NumberFormat
 import java.util.*
 import kotlin.reflect.KClass
@@ -125,7 +124,7 @@ fun AlertDialog.Builder.showOneChoiceCancelableDialog(
     setTitle(title)
     setMessage(message)
     setPositiveButton(buttonTitle, func)
-    setNeutralButton("Cancel") { _, _ -> }
+    setNegativeButton("No") { _, _ -> }
     show()
 }
 
@@ -265,8 +264,8 @@ fun <T : Any> Fragment.launchActivityWithExtras(
                 intent.putExtra(identifiers[extras.indexOf(extra)], extra)
             } else if (extra is Boolean) {
                 intent.putExtra(identifiers[extras.indexOf(extra)], extra)
-            } else if(extra is Serializable) {
-                intent.putExtra(identifiers[extras.indexOf(extra)], extra)
+            } else {
+                intent.putExtra(identifiers[extras.indexOf(extra)], Parcels.wrap(extra))
             }
         }
     }

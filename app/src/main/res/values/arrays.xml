@@ -48,7 +48,9 @@
     </string-array>
 
     <string-array name="order_type">
-        <item>Name</item>
-        <item>Price</item>
+        <item>Name A to Z</item>
+        <item>Name Z to A</item>
+        <item>Price Low to High</item>
+        <item>Price High to Low</item>
     </string-array>
 </resources>

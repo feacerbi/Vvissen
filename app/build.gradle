@@ -53,6 +53,9 @@ dependencies {
     // Picasso
     implementation "com.squareup.picasso:picasso:2.5.2"
 
+    // PinchToZoom
+    implementation 'com.bogdwellers:pinchtozoom:0.1'
+
     // Tests
     testImplementation "junit:junit:4.12"
     androidTestImplementation "com.android.support.test:runner:1.0.1"
@@ -61,6 +64,7 @@ dependencies {
     // ViewPageIndicator
     implementation 'com.github.tabassumLatif:ViewPagerIndicator:1.0.3'
 }
+
 
 
 apply plugin: 'com.google.gms.google-services'

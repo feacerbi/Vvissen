@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import com.vvissen.R
+import com.vvissen.activities.FullscreenActivity
 import com.vvissen.model.House
 import com.vvissen.model.PackageLuxury
 import com.vvissen.model.PackagePremium
 import com.vvissen.model.PackageVip
+import com.vvissen.utils.launchActivityWithExtras
 import org.parceler.Parcels
 
 /**
@@ -81,8 +83,6 @@ class HousePhotoFragment : Fragment() {
             }
         }
 
-
-
         if(view is ImageView) {
             with(view) {
                 Picasso.with(context)
@@ -91,6 +91,14 @@ class HousePhotoFragment : Fragment() {
                         .centerCrop()
                         .into(view)
             }
+        }
+
+        view.setOnClickListener {
+            launchActivityWithExtras<FullscreenActivity>(
+                    FullscreenActivity::class,
+                    arrayOf(HOUSE_EXTRA, FullscreenActivity.PHOTO_EXTRA),
+                    arrayOf(house, photo),
+                    false)
         }
 
         return view

@@ -124,25 +124,10 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
             _, isChecked -> onFilterSelected(DrawerItem.FAVORITES, if(isChecked) 1 else 0)
         })
 
-        val orderTypeSpinner = nav_view.menu.findItem(R.id.nav_order_type).actionView as Spinner
+        val orderSpinner = nav_view.menu.findItem(R.id.nav_order).actionView as Spinner
         val orderTypeAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.order_type))
         orderTypeAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-        orderTypeSpinner.adapter = orderTypeAdapter
-        orderTypeSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                // Nothing
-            }
-
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                onFilterSelected(DrawerItem.ORDERTYPE, position)
-            }
-        }
-
-        val orderSpinner = nav_view.menu.findItem(R.id.nav_order).actionView as Spinner
-        val orderAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.order))
-        orderAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-        orderSpinner.adapter = orderAdapter
+        orderSpinner.adapter = orderTypeAdapter
         orderSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -162,7 +147,6 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
             premiumBox.isChecked = true
             luxuryBox.isChecked = true
             vipBox.isChecked = true
-            orderTypeSpinner.setSelection(0)
             orderSpinner.setSelection(0)
             favBox.isChecked = false
         }

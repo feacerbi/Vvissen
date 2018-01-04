@@ -9,4 +9,6 @@
 
     <color name="ready">#4CAF50</color>
     <color name="match">#F44336</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

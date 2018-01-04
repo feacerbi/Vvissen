@@ -35,7 +35,6 @@ class HousesFragment : Fragment(), DrawerListener {
         val COUNTRY = 0
         val CITY = 1
         val ORDER = 2
-        val ORDER_TYPE = 3
     }
 
     var mListener: PagerController? = null
@@ -81,6 +80,7 @@ class HousesFragment : Fragment(), DrawerListener {
         when (pair.first) {
             DrawerItem.COUNTRIES -> {
                 selectedSpinners[COUNTRY] = pair.second
+                selectedSpinners[CITY] = 0
             }
             DrawerItem.CITIES -> {
                 selectedSpinners[CITY] = pair.second
@@ -100,9 +100,6 @@ class HousesFragment : Fragment(), DrawerListener {
             DrawerItem.ORDER -> {
                 selectedSpinners[ORDER] = pair.second
             }
-            DrawerItem.ORDERTYPE -> {
-                selectedSpinners[ORDER_TYPE] = pair.second
-            }
         }
 
         applyFilters()
@@ -116,31 +113,29 @@ class HousesFragment : Fragment(), DrawerListener {
             else -> mListener?.getActivity()?.resources?.getStringArray(R.array.all_cities)
         }
 
+        val citiesList = citiesArray!!.map { it.dropLast(5) }
+
         val filteredList = mutableListOf<House>()
 
-        if(selectedPackages[FAVORITES]) {
-            filteredList.addAll(
-                    houseList.filter {
-                        it.favorite
-                    }
-            )
-        } else {
-            filteredList.addAll(
-                    houseList.filter {
-                        (it.packageTier.name == VIP_TIER_PACKAGE.second && selectedPackages[VIP_TIER_PACKAGE.first] ||
-                                it.packageTier.name == LUXURY_TIER_PACKAGE.second && selectedPackages[LUXURY_TIER_PACKAGE.first] ||
-                                it.packageTier.name == PREMIUM_TIER_PACKAGE.second && selectedPackages[PREMIUM_TIER_PACKAGE.first])
-                                &&
-                                (it.place == citiesArray!![selectedSpinners[CITY]].dropLast(5) || citiesArray[selectedSpinners[CITY]] == "All")
-                    }
-            )
-        }
+        filteredList.addAll(
+                houseList.filter {
+                    (it.packageTier.name == VIP_TIER_PACKAGE.second && selectedPackages[VIP_TIER_PACKAGE.first] ||
+                            it.packageTier.name == LUXURY_TIER_PACKAGE.second && selectedPackages[LUXURY_TIER_PACKAGE.first] ||
+                            it.packageTier.name == PREMIUM_TIER_PACKAGE.second && selectedPackages[PREMIUM_TIER_PACKAGE.first])
+                            &&
+                            (selectedSpinners[COUNTRY] == 0 ||
+                                    it.place == citiesList[selectedSpinners[CITY]] ||
+                                    (selectedSpinners[CITY] == 0 && it.place in citiesList))
+                            &&
+                            (it.favorite && selectedPackages[FAVORITES] || !selectedPackages[FAVORITES])
+                }
+        )
 
-        if (selectedSpinners[ORDER_TYPE] == 0)
+        if (selectedSpinners[ORDER] == 0 || selectedSpinners[ORDER] == 1)
             filteredList.sortBy { it.name } else
             filteredList.sortBy { it.price }
 
-        if (selectedSpinners[ORDER] == 1) filteredList.reverse()
+        if (selectedSpinners[ORDER] == 1 || selectedSpinners[ORDER] == 3) filteredList.reverse()
 
         housesAdapter?.setItems(filteredList.toTypedArray())
 
@@ -156,7 +151,6 @@ class HousesFragment : Fragment(), DrawerListener {
         selectedSpinners[COUNTRY] = 0
         selectedSpinners[CITY] = 0
         selectedSpinners[ORDER] = 0
-        selectedSpinners[ORDER_TYPE] = 0
 
         applyFilters()
     }

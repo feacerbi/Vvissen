@@ -78,14 +78,15 @@ class MatchActivity : AppCompatActivity() {
 
             tv_user_description.text = user.shortDescription
 
+            if (newTrip) {
+                Toast.makeText(this, "New trip added as Pending", Toast.LENGTH_SHORT).show()
+                newTrip = false
+            }
+
             fab_accept.setOnClickListener { _ ->
                 nextUser()
-
-                if (newTrip) {
-                    Toast.makeText(this, "New trip added as Pending", Toast.LENGTH_SHORT).show()
-                    newTrip = false
-                }
             }
+
             fab_deny.setOnClickListener { _ ->
                 nextUser()
             }
@@ -139,7 +140,7 @@ class MatchActivity : AppCompatActivity() {
         }
 
         val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_flight_takeoff_black_24dp)
+                .setSmallIcon(R.drawable.ic_notification_logo)
                 .setContentTitle(title)
                 .setAutoCancel(true)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(description))
