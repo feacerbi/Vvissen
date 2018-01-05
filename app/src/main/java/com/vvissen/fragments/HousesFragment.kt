@@ -168,9 +168,4 @@ class HousesFragment : Fragment(), DrawerListener {
         super.onDetach()
         mListener = null
     }
-
-//    fun checkEmpty(adapter: TripsAdapter, trips: ArrayList<Trip>) {
-//        rv_trips_list.visibility = if(trips.isEmpty()) View.INVISIBLE else View.VISIBLE
-//        tv_empty.visibility = if(trips.isEmpty()) View.VISIBLE else View.INVISIBLE
-//    }
 }

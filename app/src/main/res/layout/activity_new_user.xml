@@ -1,0 +1,174 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vvissen.activities.NewUserActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/backgroundDefault"
+        app:navigationIcon="@drawable/ic_close_white_24dp"
+        app:title=""
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <TextView
+        android:id="@+id/tv_welcome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:text="Hi Felipe Acerbi," />
+
+
+    <TextView
+        android:id="@+id/tv_welcome_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_welcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        android:alpha="0.7"
+        android:textColor="@android:color/white"
+        android:text="Please tell us about you so we can customize your experience." />
+
+    <TextView
+        android:id="@+id/tv_profile_birth_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_welcome"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_description"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent"
+        android:text="birth date" />
+
+    <TextView
+        android:id="@+id/tv_birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_welcome"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_birth_title"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        tools:text="04/10/2000"/>
+
+    <TextView
+        android:id="@+id/tv_profile_gender_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_welcome"
+        app:layout_constraintTop_toBottomOf="@id/tv_birth"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent"
+        android:text="gender" />
+
+    <Spinner
+        android:id="@+id/sp_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_welcome"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_gender_title"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/colorAccent"
+        android:entries="@array/genders"/>
+
+    <TextView
+        android:id="@+id/tv_profile_interest_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/sp_gender"
+        app:layout_constraintTop_toBottomOf="@id/tv_birth"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent"
+        android:text="interest" />
+
+    <Spinner
+        android:id="@+id/sp_interest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_profile_interest_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_interest_title"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/colorAccent"
+        android:entries="@array/interests"/>
+
+    <TextView
+        android:id="@+id/tv_profile_about_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_welcome"
+        app:layout_constraintTop_toBottomOf="@id/sp_interest"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent"
+        android:text="about" />
+
+    <EditText
+        android:id="@+id/et_about"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tv_welcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_about_title"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/colorAccent"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLength="140"
+        android:textSize="16sp"
+        android:hint="Your interests, tastes and hobbies"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp">
+
+        <Button
+            android:id="@+id/bt_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/colorAccent"
+            android:text="save"/>
+
+        <Button
+            android:id="@+id/bt_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toStartOf="@id/bt_ok"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@color/colorAccent"
+            android:text="cancel"/>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

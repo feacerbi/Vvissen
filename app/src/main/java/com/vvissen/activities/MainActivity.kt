@@ -1,5 +1,6 @@
 package com.vvissen.activities
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
@@ -8,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.*
+import com.google.firebase.auth.FirebaseAuth
 import com.vvissen.R
 import com.vvissen.adapters.MainPagerAdapter
 import com.vvissen.adapters.listeners.HouseListClickListener
@@ -18,10 +20,15 @@ import com.vvissen.drawer.DrawerListener
 import com.vvissen.fragments.HousePhotoFragment
 import com.vvissen.model.*
 import com.vvissen.utils.PagerController
+import com.vvissen.utils.launchActivity
 import com.vvissen.utils.launchActivityWithExtras
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), PagerController, DrawerController, ViewPager.OnPageChangeListener, HouseListClickListener, TripListClickListener {
+
+    companion object {
+        val USER = "user"
+    }
 
     /**
      * The [android.support.v4.view.PagerAdapter] that will provide
@@ -37,6 +44,8 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        checkNewUser()
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = MainPagerAdapter(supportFragmentManager)
@@ -48,6 +57,16 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
         container.addOnPageChangeListener(this)
 
         setPage(1)
+    }
+
+    fun checkNewUser() {
+        val preferences = getPreferences(Context.MODE_PRIVATE)
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if(!preferences.contains(USER) || preferences.getString(USER, "-1") != uid) {
+            preferences.edit().putString(USER, uid).apply()
+            launchActivity(NewUserActivity::class)
+        }
     }
 
     private fun setUpFilters() {
@@ -232,7 +251,7 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
         } else if(container.currentItem == 0) {
             setPage(1)
         } else {
-            super.onBackPressed()
+            finish()
         }
     }
 }

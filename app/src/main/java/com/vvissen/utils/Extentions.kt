@@ -73,6 +73,10 @@ fun Long.toPeriodDate(): String = DateFormat.format("MMM dd", this).toString()
 
 fun Long.toFullPeriodDate(): String = DateFormat.format("EEE, MMM dd, yyyy", this).toString()
 
+fun Long.toBirthDate(): String = DateFormat.format("MM/dd/yyyy", this).toString()
+
+fun Long.toAge(): Int = (Calendar.getInstance().timeInMillis - this / 31536000000).toInt()
+
 fun String.toFormatedWebsite(): String {
     if(this.contains("www") || !this.contains("//")) return this
 
@@ -101,6 +105,11 @@ fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
 
 fun Calendar.rollDays(amount: Int): Calendar {
     set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH) + amount)
+    return this
+}
+
+fun Calendar.backYears(amount: Int): Calendar {
+    set(Calendar.YEAR, get(Calendar.YEAR) - amount)
     return this
 }
 
@@ -167,10 +176,9 @@ fun AlertDialog.Builder.showInputDialog(
 fun AlertDialog.Builder.showListDialog(
         title: String,
         items: Array<String>,
-        selected: Int = 0,
         func: (DialogInterface, Int) -> Unit) {
     setTitle(title)
-    setSingleChoiceItems(items, selected, func)
+    setItems(items, func)
     show()
 }
 
@@ -275,6 +283,11 @@ fun <T : Any> Fragment.launchActivityWithExtras(
     } else {
         startActivity(intent)
     }
+}
+
+fun <T : Any> Fragment.launchActivity(clazz: KClass<T>) {
+    val intent = Intent(activity, clazz.java)
+    startActivity(intent)
 }
 
 fun <T : Any> Activity.launchActivity(clazz: KClass<T>) {

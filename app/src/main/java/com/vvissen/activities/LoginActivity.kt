@@ -20,7 +20,7 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.vvissen.R
-import com.vvissen.utils.launchActivity
+import com.vvissen.utils.launchActivityAndFinish
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
@@ -140,7 +140,7 @@ class LoginActivity : AppCompatActivity(), FacebookCallback<LoginResult> {
         val user = FirebaseAuth.getInstance().currentUser
 
         if(user != null) {
-            launchActivity(MainActivity::class)
+            launchActivityAndFinish(MainActivity::class)
         }
         hideProgress()
     }

@@ -96,8 +96,8 @@ class HousePhotoFragment : Fragment() {
         view.setOnClickListener {
             launchActivityWithExtras<FullscreenActivity>(
                     FullscreenActivity::class,
-                    arrayOf(HOUSE_EXTRA, FullscreenActivity.PHOTO_EXTRA),
-                    arrayOf(house, photo),
+                    arrayOf(FullscreenActivity.TITLE_EXTRA, FullscreenActivity.PHOTO_EXTRA),
+                    arrayOf(house.name, photo),
                     false)
         }
 

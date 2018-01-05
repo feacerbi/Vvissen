@@ -53,4 +53,28 @@
         <item>Price Low to High</item>
         <item>Price High to Low</item>
     </string-array>
+
+    <string-array name="interests">
+        <item>Any</item>
+        <item>Men</item>
+        <item>Women</item>
+        <item>Transgenders</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="dates">
+        <item>04/10/2000</item>
+    </string-array>
+
+    <string-array name="genders">
+        <item>Man</item>
+        <item>Woman</item>
+        <item>Transgender</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="extra_menu">
+        <item>Set as Profile Picture</item>
+        <item>Remove</item>
+    </string-array>
 </resources>

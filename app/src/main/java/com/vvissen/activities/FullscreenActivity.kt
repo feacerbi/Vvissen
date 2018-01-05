@@ -5,10 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import com.bogdwellers.pinchtozoom.ImageMatrixTouchHandler
 import com.squareup.picasso.Picasso
 import com.vvissen.R
-import com.vvissen.fragments.HousePhotoFragment
-import com.vvissen.model.House
 import kotlinx.android.synthetic.main.activity_fullscreen.*
-import org.parceler.Parcels
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -16,8 +13,8 @@ import org.parceler.Parcels
  */
 class FullscreenActivity : AppCompatActivity() {
 
-    val house by lazy {
-        Parcels.unwrap(intent.getParcelableExtra(HousePhotoFragment.HOUSE_EXTRA)) as House
+    val photoTitle by lazy {
+        intent.getStringExtra(TITLE_EXTRA)
     }
 
     val photo by lazy {
@@ -30,7 +27,7 @@ class FullscreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fullscreen)
         setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener { onBackPressed() }
-        title = house.name
+        title = photoTitle
 
         iv_photo.setOnTouchListener(ImageMatrixTouchHandler(this))
 
@@ -42,7 +39,7 @@ class FullscreenActivity : AppCompatActivity() {
     }
 
     companion object {
-
+        val TITLE_EXTRA = "title"
         val PHOTO_EXTRA = "photo"
     }
 }
