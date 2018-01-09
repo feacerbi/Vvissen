@@ -77,6 +77,10 @@
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".activities.ProfileActivity" />
         <activity android:name=".activities.NewUserActivity" />
+        <activity
+            android:name=".activities.InviteActivity"
+            android:label="@string/title_activity_invite"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

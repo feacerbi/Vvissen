@@ -33,7 +33,7 @@ class UserPhotoFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_photo, container, false)
+        val view = inflater.inflate(R.layout.fragment_photo_random, container, false)
 
         val user = Parcels.unwrap(arguments?.getParcelable(USER_EXTRA)) as User
         val photoNumber = Parcels.unwrap(arguments?.getParcelable(PHOTO_EXTRA)) as Int

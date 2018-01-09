@@ -1,5 +1,6 @@
 package com.vvissen.activities
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -60,8 +61,14 @@ class NewUserActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         sp_gender.onItemSelectedListener = this
         sp_interest.adapter = interestAdapter
 
-        bt_ok.setOnClickListener { onBackPressed() }
-        bt_cancel.setOnClickListener { onBackPressed() }
+        bt_ok.setOnClickListener {
+            setResult(Activity.RESULT_OK)
+            onBackPressed()
+        }
+        bt_cancel.setOnClickListener {
+            setResult(Activity.RESULT_OK)
+            onBackPressed()
+        }
     }
 
     fun pickBirthDate() {

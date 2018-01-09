@@ -1,6 +1,8 @@
 package com.vvissen.activities
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
@@ -20,7 +22,7 @@ import com.vvissen.drawer.DrawerListener
 import com.vvissen.fragments.HousePhotoFragment
 import com.vvissen.model.*
 import com.vvissen.utils.PagerController
-import com.vvissen.utils.launchActivity
+import com.vvissen.utils.launchActivityForResult
 import com.vvissen.utils.launchActivityWithExtras
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
 
     companion object {
         val USER = "user"
+        val NEW_USER_RESULT = 0
     }
 
     /**
@@ -59,13 +62,21 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
         setPage(1)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == NEW_USER_RESULT && resultCode == Activity.RESULT_OK) {
+            Toast.makeText(this, "Welcome " + FirebaseAuth.getInstance().currentUser?.displayName, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     fun checkNewUser() {
         val preferences = getPreferences(Context.MODE_PRIVATE)
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
         if(!preferences.contains(USER) || preferences.getString(USER, "-1") != uid) {
             preferences.edit().putString(USER, uid).apply()
-            launchActivity(NewUserActivity::class)
+            launchActivityForResult(NewUserActivity::class, NEW_USER_RESULT)
         }
     }
 

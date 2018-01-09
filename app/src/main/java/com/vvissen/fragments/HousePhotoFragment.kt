@@ -38,7 +38,7 @@ class HousePhotoFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_photo, container, false)
+        val view = inflater.inflate(R.layout.fragment_photo_random, container, false)
 
         val house = Parcels.unwrap(arguments?.getParcelable(HOUSE_EXTRA)) as House
         val photoNumber = Parcels.unwrap(arguments?.getParcelable(PHOTO_EXTRA)) as Int

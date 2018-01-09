@@ -13,7 +13,7 @@ import com.vvissen.utils.launchActivityWithExtras
 import com.vvissen.utils.showListDialog
 import kotlinx.android.synthetic.main.extra_photo.view.*
 
-class ExtraPicturesAdapter(val listener: ExtraPhotoClickListener, private var profile: MutableList<Int> = mutableListOf())
+class ExtraPicturesAdapter(val listener: ExtraPhotoClickListener, private val profile: MutableList<Int> = mutableListOf())
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -40,8 +40,9 @@ class ExtraPicturesAdapter(val listener: ExtraPhotoClickListener, private var pr
                     if(which == 0) {
                         listener.onPhotoChosen(profilePhoto)
                     } else if (which == 1) {
-                        profile.removeAt(position)
-                        notifyItemRemoved(position)
+                        val itemPosition = profile.indexOf(profilePhoto)
+                        profile.removeAt(itemPosition)
+                        notifyItemRemoved(itemPosition)
                     }
                 })
                 true

@@ -9,11 +9,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.support.design.widget.Snackbar
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.TaskStackBuilder
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.vvissen.R
+import com.vvissen.adapters.GroupPhotosPagerAdapter
 import com.vvissen.adapters.UserPhotosPagerAdapter
 import com.vvissen.model.*
 import kotlinx.android.synthetic.main.activity_match.*
@@ -31,18 +32,24 @@ class MatchActivity : AppCompatActivity() {
     }
 
     private var mSectionsPagerAdapterUser: UserPhotosPagerAdapter? = null
+    private var mSectionsPagerAdapterGroup: GroupPhotosPagerAdapter? = null
 
     val users: Array<User> by lazy {
-        if(trip.groupType.name == GroupRandom().name) {
             arrayOf(
                     User().createFakeUser(),
-                    User().createFakeUser2())
-        } else {
-            arrayOf(
+                    User().createFakeUser2(),
                     User().createFakeUser3(),
                     User().createFakeUser4(),
                     User().createFakeUser5())
-        }
+    }
+
+    val groups: Array<ArrayList<User>> by lazy {
+        arrayOf(arrayListOf(
+                User().createFakeUser(),
+                User().createFakeUser2(),
+                User().createFakeUser3(),
+                User().createFakeUser4(),
+                User().createFakeUser5()))
     }
 
     val trip by lazy {
@@ -51,17 +58,14 @@ class MatchActivity : AppCompatActivity() {
 
     var newTrip = true
     var currentUser: User? = null
+    var currentGroup: ArrayList<User>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match)
 
-        currentUser = users[0]
-
         setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener { onBackPressed() }
-        title = currentUser?.name
-        toolbar.subtitle = String.format("%d years", currentUser?.age)
 
         newTrip = intent.getBooleanExtra(TRIP_NEW, true)
 
@@ -69,26 +73,56 @@ class MatchActivity : AppCompatActivity() {
     }
 
     private fun setUpUI() {
-        val user = currentUser
-        if(user != null) {
-            mSectionsPagerAdapterUser = UserPhotosPagerAdapter(supportFragmentManager, user)
+        if(trip.groupType.name == GroupRandom().name) {
+            currentUser = users[0]
+            title = currentUser?.name
+            toolbar.subtitle = String.format("%d years", currentUser?.age)
 
-            vp_photos.adapter = mSectionsPagerAdapterUser
-            vpi_photos_indicator.setViewPager(vp_photos)
+            val user = currentUser
+            if(user != null) {
+                mSectionsPagerAdapterUser = UserPhotosPagerAdapter(supportFragmentManager, user)
 
-            tv_user_description.text = user.shortDescription
+                vp_photos.adapter = mSectionsPagerAdapterUser
+                vpi_photos_indicator.setViewPager(vp_photos)
 
-            if (newTrip) {
-                Toast.makeText(this, "New trip added as Pending", Toast.LENGTH_SHORT).show()
-                newTrip = false
+                tv_user_description.text = user.shortDescription
+
+                if (newTrip) {
+                    Snackbar.make(cl_main, "New trip added as Pending", Snackbar.LENGTH_SHORT).show()
+                    newTrip = false
+                }
+
+                fab_accept.setOnClickListener { _ ->
+                    nextUser()
+                }
+
+                fab_deny.setOnClickListener { _ ->
+                    nextUser()
+                }
             }
+        } else if(trip.groupType.name == GroupGroups().name) {
+            currentGroup = groups[0]
 
-            fab_accept.setOnClickListener { _ ->
-                nextUser()
-            }
+            val group = currentGroup
+            if(group != null) {
+                title = group[0].name + " and 4 friends"
+                mSectionsPagerAdapterGroup = GroupPhotosPagerAdapter(supportFragmentManager, group)
 
-            fab_deny.setOnClickListener { _ ->
-                nextUser()
+                vp_photos.adapter = mSectionsPagerAdapterGroup
+                vpi_photos_indicator.setViewPager(vp_photos)
+
+                if (newTrip) {
+                    Snackbar.make(cl_main, "New trip added as Pending", Snackbar.LENGTH_SHORT).show()
+                    newTrip = false
+                }
+
+                fab_accept.setOnClickListener { _ ->
+                    nextGroup()
+                }
+
+                fab_deny.setOnClickListener { _ ->
+                    nextGroup()
+                }
             }
         }
     }
@@ -107,6 +141,24 @@ class MatchActivity : AppCompatActivity() {
             if(user != null) {
                 mSectionsPagerAdapterUser = UserPhotosPagerAdapter(supportFragmentManager, user)
                 vp_photos.adapter = mSectionsPagerAdapterUser
+                vpi_photos_indicator.setViewPager(vp_photos)
+            }
+        } else {
+            onBackPressed()
+        }
+    }
+
+    fun nextGroup() {
+        val nextGroup = groups.indexOf(currentGroup) + 1
+
+        if(nextGroup < groups.size) {
+            currentGroup = groups[nextGroup]
+
+            val group = currentGroup
+            if(group != null) {
+                title = group[0].name + " and 4 friends"
+                mSectionsPagerAdapterGroup = GroupPhotosPagerAdapter(supportFragmentManager, group)
+                vp_photos.adapter = mSectionsPagerAdapterGroup
                 vpi_photos_indicator.setViewPager(vp_photos)
             }
         } else {

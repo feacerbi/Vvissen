@@ -9,7 +9,6 @@ import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.DatePicker
-import android.widget.Toast
 import com.vvissen.R
 import com.vvissen.adapters.HousePhotosPagerAdapter
 import com.vvissen.adapters.ProfilePicturesAdapter
@@ -170,9 +169,9 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                     R.drawable.brunette5,
                     R.drawable.brunette6))
 
-            bt_start_match.text = "Start Match"
+            bt_start_match.text = "Invite Group"
             bt_start_match.setOnClickListener {
-                openMatcher()
+                openInvite()
             }
         }
 
@@ -186,10 +185,9 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             rv_profiles_list.visibility = View.GONE
             v_separator2.visibility = View.GONE
 
-            bt_start_match.text = "Book"
+            bt_start_match.text = "Invite Friends"
             bt_start_match.setOnClickListener {
-                Toast.makeText(this, "New trip added as Pending", Toast.LENGTH_SHORT).show()
-                finish()
+                openInvite()
             }
         }
 
@@ -201,6 +199,14 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     fun openMatcher() {
         launchActivityWithExtras<MatchActivity>(
                 MatchActivity::class,
+                arrayOf(MatchActivity.TRIP_EXTRA),
+                arrayOf(trip),
+                false)
+    }
+
+    fun openInvite() {
+        launchActivityWithExtras<InviteActivity>(
+                InviteActivity::class,
                 arrayOf(MatchActivity.TRIP_EXTRA),
                 arrayOf(trip),
                 false)
