@@ -132,7 +132,7 @@ class HousesFragment : Fragment(), DrawerListener {
         )
 
         if (selectedSpinners[ORDER] == 0 || selectedSpinners[ORDER] == 1)
-            filteredList.sortBy { it.name } else
+            filteredList.sortBy { it.place } else
             filteredList.sortBy { it.price }
 
         if (selectedSpinners[ORDER] == 1 || selectedSpinners[ORDER] == 3) filteredList.reverse()

@@ -69,6 +69,9 @@ fun String.toFormatedDate(): String {
     return "Just now"
 }
 
+fun Long.toMonthName(): String = DateFormat.format("MMMM", this).toString()
+fun Long.toYear(): String = DateFormat.format("yyyy", this).toString()
+
 fun Long.toPeriodDate(): String = DateFormat.format("MMM dd", this).toString()
 
 fun Long.toFullPeriodDate(): String = DateFormat.format("EEE, MMM dd, yyyy", this).toString()

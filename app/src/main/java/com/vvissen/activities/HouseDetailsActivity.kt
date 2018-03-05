@@ -1,24 +1,24 @@
 package com.vvissen.activities
 
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.DatePicker
 import com.vvissen.R
 import com.vvissen.adapters.HousePhotosPagerAdapter
 import com.vvissen.adapters.ProfilePicturesAdapter
+import com.vvissen.adapters.ReviewsAdapter
 import com.vvissen.fragments.HousePhotoFragment
 import com.vvissen.model.*
-import com.vvissen.utils.launchActivityWithExtras
-import com.vvissen.utils.noDecimals
-import com.vvissen.utils.rollDays
-import com.vvissen.utils.toCurrency
+import com.vvissen.utils.*
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.activity_house_details.*
+import kotlinx.android.synthetic.main.reviews_list.view.*
 import kotlinx.android.synthetic.main.start_match_toolbar.*
 import kotlinx.android.synthetic.main.trip_type_friends_list_item.*
 import kotlinx.android.synthetic.main.trip_type_groups_list_item.*
@@ -73,7 +73,7 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     private fun setUpUI() {
-        title = house.name
+        title = ""
 
         // Set up the ViewPager with the sections adapter.
         vp_photos.adapter = mSectionsPagerAdapterHouse
@@ -194,6 +194,14 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         bt_start_match.setOnClickListener {
             openMatcher()
         }
+
+        tv_more_info.setOnClickListener {
+            openMoreInfo()
+        }
+
+        fl_house_rating.setOnClickListener {
+            openReviews()
+        }
     }
 
     fun openMatcher() {
@@ -212,6 +220,24 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                 false)
     }
 
+    fun openMoreInfo() {
+        AlertDialog.Builder(this).showTextDialog("All Inclusive", getString(R.string.text_all_included))
+    }
+
+    fun openReviews() {
+        val listView = layoutInflater.inflate(R.layout.reviews_list, null)
+
+        if(listView is RecyclerView) {
+            listView.rv_reviews_list.adapter = ReviewsAdapter(arrayOf(Review().createFakeReview(), Review().createFakeReview2(), Review().createFakeReview3()))
+        }
+
+        AlertDialog.Builder(this)
+                .setTitle("Reviews")
+                .setView(listView)
+                .setPositiveButton("OK", { _, _ -> })
+                .show()
+    }
+
     private fun openMap() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse("geo:0,0?q=" + house.address)
@@ -222,24 +248,35 @@ class HouseDetailsActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     fun pickCheckinDate() {
         dateButton = CHECKIN_BUTTON
-        val picker = DatePickerDialog(this, this, checkinDate.get(Calendar.YEAR), checkinDate.get(Calendar.MONTH), checkinDate.get(Calendar.DAY_OF_MONTH))
-        picker.datePicker.minDate = Calendar.getInstance().timeInMillis
-        picker.show()
+        val picker = DatePickerDialog.newInstance(this, checkinDate.get(Calendar.YEAR), checkinDate.get(Calendar.MONTH), checkinDate.get(Calendar.DAY_OF_MONTH))
+        picker.minDate = Calendar.getInstance()
+
+        val acceptedDate = Calendar.getInstance()
+        acceptedDate.rollDays(7)
+
+        picker.selectableDays = arrayOf(acceptedDate)
+        picker.show(fragmentManager, "datePicker")
     }
 
     fun pickCheckoutDate() {
         dateButton = CHECKOUT_BUTTON
-        val picker = DatePickerDialog(this, this, checkoutDate.get(Calendar.YEAR), checkoutDate.get(Calendar.MONTH), checkoutDate.get(Calendar.DAY_OF_MONTH))
+        val picker = DatePickerDialog.newInstance(this, checkoutDate.get(Calendar.YEAR), checkoutDate.get(Calendar.MONTH), checkoutDate.get(Calendar.DAY_OF_MONTH))
 
         val minDate = Calendar.getInstance()
         minDate.timeInMillis = checkinDate.timeInMillis
         minDate.rollDays(2)
 
-        picker.datePicker.minDate = minDate.timeInMillis
-        picker.show()
+        val acceptedDate = Calendar.getInstance()
+        acceptedDate.rollDays(8)
+        val acceptedDate2 = Calendar.getInstance()
+        acceptedDate2.rollDays(9)
+
+        picker.minDate = minDate
+        picker.selectableDays = arrayOf(acceptedDate, acceptedDate2)
+        picker.show(fragmentManager, "datePicker")
     }
 
-    override fun onDateSet(datePicker: DatePicker, year: Int, month: Int, day: Int) {
+    override fun onDateSet(view: com.wdullaer.materialdatetimepicker.date.DatePickerDialog?, year: Int, month: Int, day: Int) {
         if(dateButton == CHECKIN_BUTTON) {
             checkinDate.set(year, month, day)
 

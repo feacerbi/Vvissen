@@ -5,7 +5,6 @@ import java.util.*
 
 @Parcel
 data class House (
-        var name: String = "",
         var price: Double = 0.0,
         var description: String = "",
         var address: String = "",
@@ -22,7 +21,6 @@ data class House (
 
         other as House
 
-        if (name != other.name) return false
         if (price != other.price) return false
         if (description != other.description) return false
         if (address != other.address) return false
@@ -33,8 +31,7 @@ data class House (
     }
 
     override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + price.hashCode()
+        var result = price.hashCode()
         result = 31 * result + description.hashCode()
         result = 31 * result + address.hashCode()
         result = 31 * result + Arrays.hashCode(photos)
@@ -43,11 +40,10 @@ data class House (
     }
 
     override fun compareTo(other: House): Int {
-        return this.name.compareTo(other.name)
+        return this.place.compareTo(other.place)
     }
 
     fun createFakeHouse(): House {
-        name = "The Great Tent House"
         price = 6800.0
         description = "Privacy like no other\nSurrounded by water\n4 Suites with Queen Size beds\n4 Bathrooms"
         address = "Av Tulum 13-14, Capilla Ecumenica, 22, 77500 Cancún, Q.R., Mexico"
@@ -61,7 +57,6 @@ data class House (
     }
 
     fun createFakeHouse2(): House {
-        name = "Hill Sight Infinite Pool"
         price = 4600.0
         description = "Easy access to the beach\nNice panoramic view\n3 Suites with Queen Size beds\n4 Bathrooms"
         address = "Av. Embaixador Abelardo Bueno, 1430 - Barra da Tijuca, Rio de Janeiro - RJ, 22775-040"
@@ -73,14 +68,13 @@ data class House (
     }
 
     fun createFakeHouse3(): House {
-        name = "Cozy Non-Stop Party"
         price = 1900.0
         description = "Close to Sirena Club\n200m from the Beach\n4 Suites with Queen Size beds\n6 Bathrooms"
         address = "Rua Francisco Loup, 1109 - Praia de Maresias, São Sebastião - SP, 11600-000"
         place = "Maresias"
         photos = arrayOfNulls<String>(6)
         packageTier = PackageVip()
-        rating = 4F
+        rating = 4.2F
         ratingCount = 36
         favorite = true
         return this

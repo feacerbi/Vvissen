@@ -19,56 +19,94 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_close_white_24dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            tools:title="Marcella"
-            tools:subtitle="26 years"/>
+            tools:subtitle="26 years  •  Sao Paulo"
+            tools:title="Marcella" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_accept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="@dimen/fab_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_check_white_24dp" />
-
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_deny"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_close_white_24dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_close_white_24dp" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_photos"
             android:layout_width="0dp"
             android:layout_height="400dp"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_user_description"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fab_deny"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <TextView
             android:id="@+id/tv_user_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/vp_photos"
-            app:layout_constraintBottom_toTopOf="@id/fab_deny"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textSize="16sp"
-            tools:text="I`m really into photography."/>
+            app:layout_constraintBottom_toTopOf="@+id/cl_mutual_friends"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vp_photos"
+            tools:text="I`m really into photography." />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_mutual_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@id/fab_deny"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_description">
+
+            <ImageView
+                android:id="@+id/iv_face_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:src="@drawable/facebook_icon_brand"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_face_friends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:alpha="0.8"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_face_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_face_icon"
+                app:layout_constraintTop_toTopOf="@id/iv_face_icon"
+                tools:text="23 mutual friends" />
+        </android.support.constraint.ConstraintLayout>
 
         <tabi.vpindicator.ViewPagerIndicator
             android:id="@+id/vpi_photos_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/fab_deny"
+            app:layout_constraintBottom_toBottomOf="@id/fab_deny"
             app:layout_constraintEnd_toStartOf="@id/fab_accept"
-            app:layout_constraintTop_toTopOf="@id/fab_deny"
-            app:layout_constraintBottom_toBottomOf="@id/fab_deny" />
+            app:layout_constraintStart_toEndOf="@id/fab_deny"
+            app:layout_constraintTop_toTopOf="@id/fab_deny" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.design.widget.CoordinatorLayout>

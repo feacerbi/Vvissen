@@ -97,7 +97,7 @@ class HousePhotoFragment : Fragment() {
             launchActivityWithExtras<FullscreenActivity>(
                     FullscreenActivity::class,
                     arrayOf(FullscreenActivity.TITLE_EXTRA, FullscreenActivity.PHOTO_EXTRA),
-                    arrayOf(house.name, photo),
+                    arrayOf(house.place + house.packageTier.name, photo),
                     false)
         }
 

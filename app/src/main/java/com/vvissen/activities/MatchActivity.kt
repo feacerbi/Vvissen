@@ -76,7 +76,8 @@ class MatchActivity : AppCompatActivity() {
         if(trip.groupType.name == GroupRandom().name) {
             currentUser = users[0]
             title = currentUser?.name
-            toolbar.subtitle = String.format("%d years", currentUser?.age)
+            toolbar.subtitle = String.format("%d years  •  %s", currentUser?.age, currentUser?.city)
+            tv_face_friends.text = String.format("%d mutual friends", 26)
 
             val user = currentUser
             if(user != null) {
@@ -134,7 +135,7 @@ class MatchActivity : AppCompatActivity() {
             currentUser = users[nextUser]
 
             title = currentUser?.name
-            toolbar.subtitle = String.format("%d years", currentUser?.age)
+            toolbar.subtitle = String.format("%d years  •  %s", currentUser?.age, currentUser?.city)
             tv_user_description.text = currentUser?.shortDescription
 
             val user = currentUser

@@ -11,6 +11,7 @@ data class User(
         var photos: Array<Int> = arrayOf(),
         var shortDescription: String = "",
         var gender: Gender = Gender.Man,
+        var city: String = "",
         var interest: Interest = Interest.Women) {
 
     fun createFakeUser(): User {
@@ -18,6 +19,7 @@ data class User(
         age = 24
         photos = arrayOf(R.drawable.brunette, R.drawable.brunette2)
         gender = Gender.Woman
+        city = "Rio de Janeiro"
         interest = Interest.Men
         shortDescription = "I`m really into photography."
         return this
@@ -28,6 +30,7 @@ data class User(
         age = 27
         photos = arrayOf(R.drawable.brunette4, R.drawable.brunette5, R.drawable.brunette6)
         gender = Gender.Woman
+        city = "Curitiba"
         interest = Interest.Men
         shortDescription = "Pretty much a music lover."
         return this
@@ -38,6 +41,7 @@ data class User(
         age = 27
         photos = arrayOf(R.drawable.blonde, R.drawable.blonde2)
         gender = Gender.Woman
+        city = "Sao Paulo"
         interest = Interest.Men
         shortDescription = "Beaches, sand, Sun and sea are my thing."
         return this
@@ -48,6 +52,7 @@ data class User(
         age = 32
         photos = arrayOf(R.drawable.red)
         gender = Gender.Woman
+        city = "Florianopolis"
         interest = Interest.Men
         shortDescription = "I`m always up for a night out till the sunrise."
         return this
@@ -58,6 +63,7 @@ data class User(
         age = 22
         photos = arrayOf(R.drawable.japa)
         gender = Gender.Woman
+        city = "Recife"
         interest = Interest.Men
         shortDescription = "A good time spent in 2 is my first choice."
         return this

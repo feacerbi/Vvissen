@@ -76,11 +76,13 @@
             android:label="@string/title_activity_fullscreen"
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.NewUserActivity" />
+        <activity android:name=".activities.NewUserActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".activities.InviteActivity"
             android:label="@string/title_activity_invite"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.PackagesActivity" />
     </application>
 
 </manifest>

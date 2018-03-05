@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:gravity="center"
         android:textSize="16sp"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:text="No houses to show"/>
 
 </android.support.constraint.ConstraintLayout>

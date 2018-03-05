@@ -30,7 +30,6 @@ class TripsAdapter(private val listener: TripListClickListener, private val trip
         with(holder.itemView) {
             tv_place_name.text = trip.house.place
             tv_package_tier.text = trip.house.packageTier.name
-            tv_house_title.text = trip.house.name
             tv_dates.text = String.format("${trip.period.first.toPeriodDate()} - ${trip.period.second.toPeriodDate()}")
             tv_house_people.text = String.format("${trip.groupType.name.toLowerCase()} trip")
             tv_house_price.text = trip.totalPrice().toCurrency()
@@ -105,7 +104,7 @@ class TripsAdapter(private val listener: TripListClickListener, private val trip
         val intent = Intent(Intent.ACTION_INSERT)
                 .setData(CalendarContract.Events.CONTENT_URI)
                 .putExtra(CalendarContract.Events.TITLE, "Trip to " + trip.house.place + " by Vvissen")
-                .putExtra(CalendarContract.Events.DESCRIPTION, "House: " + trip.house.name + "\nType: " + trip.groupType.name)
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Type: " + trip.groupType.name)
                 .putExtra(CalendarContract.Events.EVENT_LOCATION, trip.house.address)
                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, trip.period.first)
                 .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, trip.period.second)

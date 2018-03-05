@@ -14,6 +14,7 @@ import com.vvissen.adapters.listeners.ExtraPhotoClickListener
 import com.vvissen.model.User
 import com.vvissen.utils.launchActivityWithExtras
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.interest_box.view.*
 
 class ProfileActivity : AppCompatActivity(), ExtraPhotoClickListener {
 
@@ -60,6 +61,18 @@ class ProfileActivity : AppCompatActivity(), ExtraPhotoClickListener {
         }
 
         rv_extra_photos.adapter = extrasAdapter
+
+//        interest1.tv_interest_title.setTextColor(resources.getColor(R.color.colorAccent))
+        interest1.setBackgroundResource(R.drawable.shape_outline_accent)
+        interest1.tv_interest_title.text = "music"
+//        interest2.tv_interest_title.setTextColor(resources.getColor(R.color.colorAccent))
+        interest2.setBackgroundResource(R.drawable.shape_outline_accent)
+        interest2.tv_interest_title.text = "dance"
+//        interest3.tv_interest_title.setTextColor(resources.getColor(R.color.colorAccent))
+        interest3.setBackgroundResource(R.drawable.shape_outline_accent)
+        interest3.tv_interest_title.text = "travel"
+
+        tv_profile_city.text = user.city
 
         fab.setOnClickListener {
             extrasAdapter.addPhoto(R.drawable.brunette)

@@ -42,9 +42,9 @@
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-smallcaps"
             android:layout_marginStart="16dp"
-            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
             android:textAllCaps="true"
-            android:alpha="0.8"
             tools:text="july 05 - july 14"/>
 
         <TextView
@@ -60,51 +60,30 @@
             tools:text="8/10 confirmed" />
 
         <TextView
-            android:id="@+id/tv_house_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintStart_toStartOf="@id/tv_dates"
-            card_view:layout_constraintTop_toBottomOf="@id/tv_dates"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-sma"
-            tools:text="The Great Tent House"/>
-
-        <TextView
             android:id="@+id/tv_house_people"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             card_view:layout_constraintStart_toStartOf="@id/tv_dates"
-            card_view:layout_constraintTop_toBottomOf="@id/tv_house_title"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_dates"
             android:textSize="14sp"
             android:fontFamily="sans-serif-smallcaps"
+            android:alpha="0.9"
             tools:text="random trip"/>
-
-        <TextView
-            android:id="@+id/tv_separator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintStart_toEndOf="@id/tv_house_people"
-            card_view:layout_constraintTop_toBottomOf="@id/tv_house_title"
-            android:layout_marginStart="8dp"
-            android:textSize="14sp"
-            android:fontFamily="sans-serif-smallcaps"
-            android:text="•"/>
 
         <TextView
             android:id="@+id/tv_house_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            card_view:layout_constraintStart_toEndOf="@id/tv_separator"
-            card_view:layout_constraintTop_toBottomOf="@id/tv_house_title"
-            android:layout_marginStart="8dp"
+            card_view:layout_constraintStart_toStartOf="@id/tv_dates"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_house_people"
             android:textSize="14sp"
             android:fontFamily="sans-serif-smallcaps"
+            android:alpha="0.9"
             android:text="U$2,500"/>
 
         <TextView
             android:id="@+id/scrim"
-            android:layout_height="?android:attr/actionBarSize"
+            android:layout_height="72dp"
             android:layout_width="0dp"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintBottom_toBottomOf="@id/iv_place_photo"

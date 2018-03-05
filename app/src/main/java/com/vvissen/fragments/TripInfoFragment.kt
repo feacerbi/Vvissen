@@ -85,7 +85,7 @@ class TripInfoFragment : Fragment() {
         val intent = Intent(Intent.ACTION_INSERT)
                 .setData(CalendarContract.Events.CONTENT_URI)
                 .putExtra(CalendarContract.Events.TITLE, "Trip to " + currentTrip.house.place + " by Vvissen")
-                .putExtra(CalendarContract.Events.DESCRIPTION, "House: " + currentTrip.house.name + "\nType: " + currentTrip.groupType.name)
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Type: " + currentTrip.groupType.name)
                 .putExtra(CalendarContract.Events.EVENT_LOCATION, currentTrip.house.address)
                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, currentTrip.period.first)
                 .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, currentTrip.period.second)

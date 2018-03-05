@@ -31,6 +31,19 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
     companion object {
         val USER = "user"
         val NEW_USER_RESULT = 0
+        val PACKAGES_RESULT = 1
+    }
+
+    val premiumBox by lazy {
+        nav_view.menu.findItem(R.id.nav_premium).actionView as CheckBox
+    }
+
+    val luxuryBox by lazy {
+        nav_view.menu.findItem(R.id.nav_luxury).actionView as CheckBox
+    }
+
+    val vipBox by lazy {
+        nav_view.menu.findItem(R.id.nav_vip).actionView as CheckBox
     }
 
     /**
@@ -66,7 +79,31 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == NEW_USER_RESULT && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(this, "Welcome " + FirebaseAuth.getInstance().currentUser?.displayName, Toast.LENGTH_SHORT).show()
+            launchActivityForResult(PackagesActivity::class, PACKAGES_RESULT)
+        }
+
+        if(requestCode == PACKAGES_RESULT && resultCode == Activity.RESULT_OK) {
+            val selected = data?.getIntExtra(PackagesActivity.SELECTED_EXTRA, 0)
+            when(selected) {
+                0 -> {
+                    premiumBox.isChecked = true
+                    luxuryBox.isChecked = false
+                    vipBox.isChecked = false
+                }
+                1 -> {
+                    premiumBox.isChecked = false
+                    luxuryBox.isChecked = true
+                    vipBox.isChecked = false
+                }
+                2 -> {
+                    premiumBox.isChecked = false
+                    luxuryBox.isChecked = false
+                    vipBox.isChecked = true
+                }
+            }
+            onFilterSelected(DrawerItem.PREMIUM, if(premiumBox.isChecked) 1 else 0)
+            onFilterSelected(DrawerItem.LUXURY, if(luxuryBox.isChecked) 1 else 0)
+            onFilterSelected(DrawerItem.VIP, if(vipBox.isChecked) 1 else 0)
         }
     }
 
@@ -127,21 +164,18 @@ class MainActivity : AppCompatActivity(), PagerController, DrawerController, Vie
             }
         }
 
-        val premiumBox = nav_view.menu.findItem(R.id.nav_premium).actionView as CheckBox
         premiumBox.text = PackagePremium().name
         premiumBox.isChecked = true
         premiumBox.setOnCheckedChangeListener({
             _, isChecked -> onFilterSelected(DrawerItem.PREMIUM, if(isChecked) 1 else 0)
         })
 
-        val luxuryBox = nav_view.menu.findItem(R.id.nav_luxury).actionView as CheckBox
         luxuryBox.text = PackageLuxury().name
         luxuryBox.isChecked = true
         luxuryBox.setOnCheckedChangeListener({
             _, isChecked -> onFilterSelected(DrawerItem.LUXURY, if(isChecked) 1 else 0)
         })
 
-        val vipBox = nav_view.menu.findItem(R.id.nav_vip).actionView as CheckBox
         vipBox.text = PackageVip().name
         vipBox.isChecked = true
         vipBox.setOnCheckedChangeListener({

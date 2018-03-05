@@ -24,7 +24,6 @@ class HousesAdapter(private val listener: HouseListClickListener, private var ho
         with(holder.itemView) {
             tv_place_name.text = house.place
             tv_package_tier.text = house.packageTier.name
-            tv_house_title.text = house.name
             tv_house_price.text = String.format("U${NumberFormat.getCurrencyInstance(Locale.getDefault()).format(house.price).noDecimals()} per weekend")
             tv_house_rating_grade.text = house.rating.toString()
             tv_house_rating.rating = house.rating

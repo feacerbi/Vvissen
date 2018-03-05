@@ -13,6 +13,7 @@ import com.vvissen.adapters.SpinnerItemsAdapter
 import com.vvissen.utils.backYears
 import com.vvissen.utils.toBirthDate
 import kotlinx.android.synthetic.main.activity_new_user.*
+import kotlinx.android.synthetic.main.interest_box.view.*
 import java.util.*
 
 class NewUserActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
@@ -27,13 +28,14 @@ class NewUserActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         intent.getBooleanExtra(EDIT_EXTRA, false)
     }
 
+    val interests = Array(10, { _ -> false })
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_user)
 
         setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener { onBackPressed() }
-        title = ""
 
         setUpUI()
     }
@@ -42,9 +44,12 @@ class NewUserActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         if(edit) {
-            tv_welcome.text = "Edit Profile"
+            title = "Edit Profile"
+            tv_welcome.visibility = View.GONE
             tv_welcome_description.text = "The more your profile represents your personality, more people will be interested."
         } else {
+            title = ""
+            tv_welcome.visibility = View.VISIBLE
             tv_welcome.text = String.format("Hi %s,", currentUser?.displayName)
         }
 
@@ -57,17 +62,72 @@ class NewUserActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         val interestAdapter = SpinnerItemsAdapter(this, R.layout.profile_spinner_item, resources.getStringArray(R.array.interests), false)
         interestAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
 
+        val countryAdapter = SpinnerItemsAdapter(this, R.layout.profile_spinner_item, resources.getStringArray(R.array.from_countries), false)
+        countryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+
+        val cityAdapter = SpinnerItemsAdapter(this, R.layout.profile_spinner_item, resources.getStringArray(R.array.from_brazil_cities), false)
+        cityAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+
         sp_gender.adapter = genderAdapter
-        sp_gender.onItemSelectedListener = this
         sp_interest.adapter = interestAdapter
+        sp_country.adapter = countryAdapter
+        sp_city.adapter = cityAdapter
+
+        sp_country.onItemSelectedListener = this
+
+        interest1.setOnClickListener { selectInterest(it, 0) }
+        interest1.tv_interest_title.text = "music"
+        interest2.setOnClickListener { selectInterest(it, 1) }
+        interest2.tv_interest_title.text = "skate"
+        interest3.setOnClickListener { selectInterest(it, 2) }
+        interest3.tv_interest_title.text = "swimming"
+        interest4.setOnClickListener { selectInterest(it, 3) }
+        interest4.tv_interest_title.text = "games"
+        interest5.setOnClickListener { selectInterest(it, 4) }
+        interest5.tv_interest_title.text = "drinks"
+        interest6.setOnClickListener { selectInterest(it, 5) }
+        interest6.tv_interest_title.text = "bar"
+        interest7.setOnClickListener { selectInterest(it, 6) }
+        interest7.tv_interest_title.text = "dance"
+        interest8.setOnClickListener { selectInterest(it, 7) }
+        interest8.tv_interest_title.text = "bike"
+        interest9.setOnClickListener { selectInterest(it, 8) }
+        interest9.tv_interest_title.text = "travel"
+        interest10.setOnClickListener { selectInterest(it, 9) }
 
         bt_ok.setOnClickListener {
-            setResult(Activity.RESULT_OK)
             onBackPressed()
         }
         bt_cancel.setOnClickListener {
-            setResult(Activity.RESULT_OK)
             onBackPressed()
+        }
+
+        et_about.setOnTouchListener {
+            view, _ ->
+            view.isFocusable = true
+            view.isFocusableInTouchMode = true
+            false
+        }
+    }
+
+    fun shouldSelect() = selectedNumber() < 3
+
+    fun selectedNumber(): Int {
+        var number = 0
+        interests.forEach { if(it) number++ }
+        return number
+    }
+
+    fun selectInterest(button: View, position: Int) {
+        val isSelected = interests[position]
+
+        if(isSelected || !isSelected && shouldSelect()) {
+            button.tv_interest_title.setTextColor(if (isSelected) resources.getColor(android.R.color.white) else resources.getColor(R.color.colorAccent))
+            button.setBackgroundResource(if (isSelected) R.drawable.shape_outline_white else R.drawable.shape_outline_accent)
+            interests[position] = !isSelected
+
+            tv_profile_interests_title.text = String.format("personality (%d)", 3 - selectedNumber())
+            bt_ok.isEnabled = selectedNumber() == 3
         }
     }
 
@@ -89,7 +149,21 @@ class NewUserActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val adapter = parent?.adapter
         if(adapter is SpinnerItemsAdapter) {
-            adapter.setSelectedPosition(position)
+            when(position) {
+                0 -> {
+                    val cityAdapter = SpinnerItemsAdapter(this, R.layout.profile_spinner_item, resources.getStringArray(R.array.from_brazil_cities), false)
+                    sp_city.adapter = cityAdapter
+                }
+                1 -> {
+                    val cityAdapter = SpinnerItemsAdapter(this, R.layout.profile_spinner_item, resources.getStringArray(R.array.from_mexico_cities), false)
+                    sp_city.adapter = cityAdapter
+                }
+            }
         }
+    }
+
+    override fun onBackPressed() {
+        setResult(Activity.RESULT_OK)
+        super.onBackPressed()
     }
 }

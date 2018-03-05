@@ -57,7 +57,6 @@ class TripActivity : AppCompatActivity() {
     private fun setUpUI() {
         title = ""
 
-        tv_title.text = trip.house.name
         tv_place.text = trip.house.place
         tv_package_tier.text = trip.house.packageTier.name
 
